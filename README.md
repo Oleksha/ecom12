@@ -19,7 +19,7 @@ Laravel — один из самых мощных и широко использ
 
 # Оглавление
 
-Часть 1. [Установка Laravel 12](/documentation/01.md).
+1. [Установка Laravel 12](/documentation/01.md).
 
 - [Simple, fast routing engine](https://laravel.com/docs/routing).
 - [Powerful dependency injection container](https://laravel.com/docs/container).
