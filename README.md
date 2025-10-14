@@ -1,15 +1,25 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Учебник по электронной коммерции на Laravel 12 с несколькими поставщиками
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# О проекте
 
-## About Laravel
+Добро пожаловать в серию «Электронная коммерция от нескольких поставщиков на Laravel 12»!
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+В этой серии мы создадим с нуля полнофункциональный многопользовательский веб-сайт электронной коммерции, используя новейший фреймворк Laravel 12.
+
+## Почему Laravel?
+
+Laravel — один из самых мощных и широко используемых PHP-фреймворков для веб-разработки. С недавним выходом Laravel 12 мы рассмотрим и реализуем его новейшие функции.
+
+Кроме того, Laravel 12 отлично подходит для создания сайтов электронной коммерции, поскольку он обеспечивает улучшенную безопасность, лучшую поддержку API и улучшенные запросы к базе данных для более высокой производительности.
+
+## Что такое многопользовательский сайт электронной коммерции?
+
+Мультивендорная платформа электронной коммерции позволяет нескольким продавцам регистрироваться и продавать свои товары на одном сайте, подобно Amazon или eBay. Эта модель поддерживает транзакции как B2B, так и B2C, позволяя владельцу сайта эффективно управлять поставщиками, заказами и платежами.
+
+# Оглавление
+
+Часть 1. [Установка Laravel 12](/documentation/01.md).
 
 - [Simple, fast routing engine](https://laravel.com/docs/routing).
 - [Powerful dependency injection container](https://laravel.com/docs/container).
