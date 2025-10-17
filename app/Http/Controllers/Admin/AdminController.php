@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\DetailRequest;
 use App\Http\Requests\Admin\LoginRequest;
 use App\Http\Requests\Admin\PasswordRequest;
+use App\Http\Requests\Admin\SubadminRequest;
 use App\Models\Admin;
 use App\Services\Admin\AdminService;
 use Illuminate\Http\Request;
@@ -44,10 +45,13 @@ class AdminController extends Controller
     {
         $data = $request->all();
         $loginStatus = $this->adminService->login($data);
-        if ($loginStatus == 1) {
-            return redirect('admin/dashboard');
-        } else {
-            return redirect()->back()->with('error_message', 'Неверный адрес электронной почты или пароль');
+        if ($loginStatus == 'success') {
+            return redirect()->route('dashboard.index');
+        } elseif ($loginStatus == 'inactive') {
+            return redirect()->back()->with('error_message', 'Your account is inactive, please contact the administrator');
+        }
+        else {
+            return redirect()->back()->with('error_message', 'Invalid Email or Password');
         }
     }
 
@@ -140,5 +144,25 @@ class AdminController extends Controller
     {
         $result = $this->adminService->deleteSubadmins($id);
         return redirect()->back()->with('success_message', $result['message']);
+    }
+
+    public function addEditSubadmin($id = null)
+    {
+        if ($id == null) {
+            $title = "Add Subadmin";
+            $subadmin_data = array();
+        } else {
+            $title = "Edit Subadmin";
+            $subadmin_data = Admin::find($id);
+        }
+        return view('admin.subadmins.add_edit_subadmin', compact('title', 'subadmin_data'));
+    }
+
+    public function addEditSubadminRequest(SubadminRequest $request)
+    {
+        if ($request->isMethod('post')) {
+            $result = $this->adminService->addEditSubadmin($request);
+            return redirect('admin/subadmins')->with('success_message', $result['message']);
+        }
     }
 }

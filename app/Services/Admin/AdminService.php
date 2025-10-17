@@ -7,25 +7,33 @@ use Auth;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
+use function Laravel\Prompts\password;
 
 class AdminService
 {
     public function login($data): int
     {
-        if (Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password']])) {
-            // Remember Admin Email and Password
-            if (!empty($data['remember'])) {
-                setcookie("email", $data['email'], time() + 3600);
-                setcookie("password", $data['password'], time() + 3600);
-            } else {
-                setcookie("email", "");
-                setcookie("password", "");
+        $admin = Admin::where('email', $data['email'])->first();
+        if ($admin) {
+            if ($admin->status == 0) {
+                return "inactive";
             }
-            $loginStatus = 1;
+            if (Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password']])) {
+                // Remember Admin Email and Password
+                if (!empty($data['remember'])) {
+                    setcookie("email", $data['email'], time() + 3600);
+                    setcookie("password", $data['password'], time() + 3600);
+                } else {
+                    setcookie("email", "");
+                    setcookie("password", "");
+                }
+                return 'success'; // Return success if login is successful
+            } else {
+               return 'invalid'; // Return invalid if credentials are incorrect
+            }
         } else {
-            $loginStatus = 0;
+            return 'invalid'; // Return invalid if email is not found
         }
-        return $loginStatus;
     }
 
     public function verifyPassword($data): string
@@ -120,5 +128,53 @@ class AdminService
         Admin::where('id', $id)->delete();
         $message = "Subadmin deleted successfully!";
         return array("message" => $message);
+    }
+
+    public function addEditSubadmin($request): array
+    {
+        $data = $request->all();
+        if (isset($data['id']) && $data['id'] != "") {
+            $subadmin_data = Admin::find($data['id']);
+            $message = "Subadmin updated successfully!";
+        } else {
+            $subadmin_data = new Admin();
+            $message = "Subadmin added successfully!";
+        }
+
+        // Upload Admin Image
+        if ($request->hasFile('image')) {
+            $image_tmp = $request->file('image');
+            if ($image_tmp->isValid()) {
+                // Create image manager with desired driver
+                $manager = new ImageManager(new Driver());
+                // Read image from file system
+                $image = $manager->read($image_tmp);
+                // Get Image Extension
+                $extension = $image_tmp->getClientOriginalExtension();
+                // Generate New Image Name
+                $imageName = rand(111, 99999) . '.' . $extension;
+                $image_path = 'admin/images/photos/' . $imageName;
+                // Save image in specified path
+                $image->save($image_path);
+            }
+        } elseif (!empty($data['current_image'])) {
+            $imageName = $data['current_image'];
+        } else {
+            $imageName = "";
+        }
+
+        $subadmin_data->name = $data['name'];
+        $subadmin_data->mobile = $data['mobile'];
+        $subadmin_data->image = $imageName;
+        if (!isset($data['id'])) {
+            $subadmin_data->role = "subadmin";
+            $subadmin_data->status = 1;
+            $subadmin_data->email = $data['email'];
+        }
+        if ($data['password'] != "") {
+            $subadmin_data->password = Hash::make($data['password']);
+        }
+        $subadmin_data->save();
+        return array('message' => $message);
     }
 }

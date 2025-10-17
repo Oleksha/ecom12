@@ -28,7 +28,14 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card mb-4">
-                            <div class="card-header"><h3 class="card-title">Subadmins</h3></div>
+                            <div class="card-header">
+                                <h3 class="card-title">Subadmins</h3>
+                                <a style="max-width: 150px; float:right; display: inline-block;"
+                                   href="{{ url('admin/add-edit-subadmin') }}"
+                                   class="btn btn-block btn-primary">
+                                    Add Sub Admin
+                                </a>
+                            </div>
                             <!-- /.card-header -->
                             <div class="card-body">
                                 @if(Session::has('success_message'))
@@ -71,8 +78,9 @@
                                                 <a class="ms-2"
                                                    style="color: #3f6ed3"
                                                    title="Delete Subadmin"
-                                                   href="{{ url('admin/delete-subadmin/' . $subadmin->id) }}"><i class="fas fa-trash"></i>
-                                                </a>
+                                                   href="{{ url('admin/delete-subadmin/' . $subadmin->id) }}"><i class="fas fa-trash"></i></a>
+                                                <a class="ms-2"
+                                                   href="{{ url('admin/add-edit-subadmin/'.$subadmin->id) }}"><i class="fas fa-edit"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
