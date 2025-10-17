@@ -32,6 +32,7 @@ Route::prefix('admin')->group(function () {
             ->name('admin.update-details.request');
         // Delete Profile Image
         Route::post('delete-profile-image', [AdminController::class, 'deleteProfileImage']);
+
         // Sub-Admins
         Route::get('subadmins', [AdminController::class, 'subadmins']);
         // Update Sub-Admins status
@@ -41,6 +42,8 @@ Route::prefix('admin')->group(function () {
         Route::get('add-edit-subadmin/{id?}', [AdminController::class, 'addEditSubadmin']);
         // Delete Sub-Admins
         Route::get('delete-subadmin/{id}', [AdminController::class, 'deleteSubadmins']);
+        Route::get('/update-role/{id}', [AdminController::class, 'updateRole']);
+        Route::post('/update-role/request', [AdminController::class, 'updateRoleRequest']);
         // Admin Logout
         Route::get('logout', [AdminController::class, 'destroy'])->name('admin.logout');
     });

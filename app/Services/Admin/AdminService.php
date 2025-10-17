@@ -3,6 +3,7 @@
 namespace App\Services\Admin;
 
 use App\Models\Admin;
+use App\Models\AdminsRole;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -176,5 +177,27 @@ class AdminService
         }
         $subadmin_data->save();
         return array('message' => $message);
+    }
+
+    public function updateRole($request): array
+    {
+        $data = $request->all();
+        // Remove existing roles before updating
+        AdminsRole::where('subadmin_id', $data['subadmin_id'])->delete();
+        // Assign new roles dynamically
+        foreach ($data as $key => $value) {
+            if (!is_array($value)) continue; // Skip non-module fields
+            $view = $value['view'] ?? 0;
+            $edit = $value['edit'] ?? 0;
+            $full = $value['full'] ?? 0;
+            AdminsRole::insert([
+                'subadmin_id' => $data['subadmin_id'],
+                'module' => $key,
+                'view_access' => $view,
+                'edit_access' => $edit,
+                'full_access' => $full,
+            ]);
+        }
+        return ['message' => "Subadmin Roles updated successfully!"];
     }
 }

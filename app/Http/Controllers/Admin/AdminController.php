@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\LoginRequest;
 use App\Http\Requests\Admin\PasswordRequest;
 use App\Http\Requests\Admin\SubadminRequest;
 use App\Models\Admin;
+use App\Models\AdminsRole;
 use App\Services\Admin\AdminService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -163,6 +164,23 @@ class AdminController extends Controller
         if ($request->isMethod('post')) {
             $result = $this->adminService->addEditSubadmin($request);
             return redirect('admin/subadmins')->with('success_message', $result['message']);
+        }
+    }
+
+    public function updateRole($id)
+    {
+        $subadminRoles = AdminsRole::where('subadmin_id', $id)->get()->toArray();
+        $subadminDetails = Admin::where('id', $id)->first()->toArray();
+        $modules = ['categories', 'products', 'orders', 'users', 'cms_pages']; // Dynamic Modules
+        $title = "Manage Subadmin (" . $subadminDetails['name'] . ") Roles/Permissions";
+        return view('admin.subadmins.update_roles')->with(compact('modules', 'subadminRoles', 'id', 'title'));
+    }
+
+    public function updateRoleRequest(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $result = $this->adminService->updateRole($request);
+            return redirect()->back()->with('success_message', $result['message']);
         }
     }
 }

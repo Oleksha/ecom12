@@ -76,11 +76,13 @@
                                                            data-status="Inactive"></i></a>
                                                 @endif
                                                 <a class="ms-2"
+                                                   href="{{ url('admin/add-edit-subadmin/' . $subadmin->id) }}"><i class="fas fa-edit"></i></a>
+                                                <a title="Set Permissions for Subadmin" class="ms-2"
+                                                   href="{{ url('admin/update-role/' . $subadmin->id) }}"><i class="fas fa-unlock"></i></a>
+                                                <a class="ms-2"
                                                    style="color: #3f6ed3"
                                                    title="Delete Subadmin"
                                                    href="{{ url('admin/delete-subadmin/' . $subadmin->id) }}"><i class="fas fa-trash"></i></a>
-                                                <a class="ms-2"
-                                                   href="{{ url('admin/add-edit-subadmin/'.$subadmin->id) }}"><i class="fas fa-edit"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
