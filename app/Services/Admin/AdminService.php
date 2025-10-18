@@ -8,7 +8,6 @@ use Auth;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
-use function Laravel\Prompts\password;
 
 class AdminService
 {

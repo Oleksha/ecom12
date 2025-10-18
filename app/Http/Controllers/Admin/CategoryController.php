@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Services\Admin\CategoryService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -35,7 +36,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $title = 'Добавить категорию';
+        return view('admin.categories.add_edit_category', compact('title'));
     }
 
     /**
@@ -43,7 +45,8 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $message = $this->categoryService->addEditCategory($request);
+        return redirect()->route('categories.index')->with('success_message', $message);
     }
 
     /**
@@ -59,7 +62,9 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $title = 'Редактировать категорию';
+        $category = Category::findOrFail($id);
+        return view('admin.categories.add_edit_category', compact('title', 'category'));
     }
 
     /**
@@ -67,7 +72,9 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->merge(['id' => $id]);
+        $message = $this->categoryService->addEditCategory($request);
+        return redirect()->route('categories.index')->with('success_message', $message);
     }
 
     /**

@@ -31,7 +31,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">Категории</h3>
                                 <a style="max-width: 250px; float:right; display: inline-block;"
-                                   href="{{ url('admin/add-edit-category') }}"
+                                   href="{{ route('categories.create') }}"
                                    class="btn btn-block btn-primary">
                                     Добавить категорию
                                 </a>
@@ -39,7 +39,7 @@
                             <!-- /.card-header -->
                             <div class="card-body">
                                 @if(Session::has('success_message'))
-                                    <div class="alert alert-success alert-dismissible fade show m-3">
+                                    <div class="alert alert-success alert-dismissible fade show m-3" role="alert">
                                         <strong>Success: </strong> {{ Session::get('success_message') }}
                                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                     </div>
@@ -64,7 +64,9 @@
                                             <td>{{ $category->url }}</td>
                                             <td>{{ $category->created_at->format('F j, Y, g:i a') }}</td>
                                             <td>
-                                                <!-- Action(Enable/Disable, Edit, Delete) will be added here -->
+                                                <a href="{{ route('categories.edit', $category->id) }}">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
