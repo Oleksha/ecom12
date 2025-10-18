@@ -37,7 +37,11 @@ class CategoryController extends Controller
     public function create()
     {
         $title = 'Добавить категорию';
-        return view('admin.categories.add_edit_category', compact('title'));
+        $category = new Category();
+        $getCategories = Category::getCategories('Admin');
+        /*dd($getCategories);*/
+        return view('admin.categories.add_edit_category',
+            compact('title', 'getCategories', 'category'));
     }
 
     /**
@@ -64,7 +68,9 @@ class CategoryController extends Controller
     {
         $title = 'Редактировать категорию';
         $category = Category::findOrFail($id);
-        return view('admin.categories.add_edit_category', compact('title', 'category'));
+        $getCategories = Category::getCategories('Admin');
+        return view('admin.categories.add_edit_category',
+            compact('title', 'category', 'getCategories'));
     }
 
     /**
@@ -72,9 +78,10 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->merge(['id' => $id]);
+        $request->merge(['id' => $id]); // Ensure `addEditCategory` handles both Add/Edit
         $message = $this->categoryService->addEditCategory($request);
-        return redirect()->route('categories.index')->with('success_message', $message);
+        return redirect()->route('categories.index')
+            ->with('success_message', $message);
     }
 
     /**

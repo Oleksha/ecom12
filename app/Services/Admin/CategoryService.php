@@ -62,6 +62,9 @@ class CategoryService
             $message = 'Category added successfully!';
         }
 
+        // Save parent_id (null for Main Category)
+        $category->parent_id = !empty($data['parent_id']) ? $data['parent_id'] : null;
+
         // Upload Category Image
         if ($request->hasFile('category_image')) {
             $image_tmp = $request->file('category_image');
