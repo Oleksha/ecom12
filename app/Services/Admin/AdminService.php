@@ -12,7 +12,7 @@ use function Laravel\Prompts\password;
 
 class AdminService
 {
-    public function login($data): int
+    public function login($data): string
     {
         $admin = Admin::where('email', $data['email'])->first();
         if ($admin) {

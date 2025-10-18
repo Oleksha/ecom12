@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -35,15 +36,16 @@ Route::prefix('admin')->group(function () {
 
         // Sub-Admins
         Route::get('subadmins', [AdminController::class, 'subadmins']);
-        // Update Sub-Admins status
         Route::post('update-subadmin-status', [AdminController::class, 'updateSubadminStatus']);
-        // Delete Sub-Admins
         Route::post('add-edit-subadmin/request', [AdminController::class, 'addEditSubadminRequest']);
         Route::get('add-edit-subadmin/{id?}', [AdminController::class, 'addEditSubadmin']);
-        // Delete Sub-Admins
         Route::get('delete-subadmin/{id}', [AdminController::class, 'deleteSubadmins']);
         Route::get('/update-role/{id}', [AdminController::class, 'updateRole']);
         Route::post('/update-role/request', [AdminController::class, 'updateRoleRequest']);
+
+        // Categories
+        Route::resource('categories', CategoryController::class);
+
         // Admin Logout
         Route::get('logout', [AdminController::class, 'destroy'])->name('admin.logout');
     });
