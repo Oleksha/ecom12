@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CategoryRequest;
 use App\Models\Category;
 use App\Services\Admin\CategoryService;
 use Illuminate\Http\Request;
@@ -47,7 +48,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         $message = $this->categoryService->addEditCategory($request);
         return redirect()->route('categories.index')->with('success_message', $message);
@@ -76,7 +77,7 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CategoryRequest $request, string $id)
     {
         $request->merge(['id' => $id]); // Ensure `addEditCategory` handles both Add/Edit
         $message = $this->categoryService->addEditCategory($request);
