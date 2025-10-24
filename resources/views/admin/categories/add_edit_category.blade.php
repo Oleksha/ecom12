@@ -95,8 +95,9 @@
                                         <input type="file" class="form-control" id="category_image"
                                                name="category_image" accept="image/*">
                                         @if(!empty($category->image))
-                                            <div class="mt-2">
-                                                <img src="{{ asset('front/images/categories/' . $category->image) }}" width="50" alt="Изображение">
+                                            <div class="mt-2" id="categoryImageBlock">
+                                                <a target="_blank" href="{{ asset('front/images/categories/' . $category->image) }}"><img src="{{ asset('front/images/categories/' . $category->image) }}" width="50" alt="Изображение"></a>
+                                                <a href="javascript:void(0)" id="deleteCategoryImage" data-category-id="{{ $category->id }}" class="text-danger">Delete</a>
                                             </div>
                                         @endif
                                     </div>
@@ -105,8 +106,9 @@
                                         <input type="file" class="form-control" id="size_chart"
                                                name="size_chart" accept="image/*">
                                         @if(!empty($category->size_chart))
-                                            <div class="mt-2">
-                                                <img src="{{ asset('front/images/size-charts/' . $category->size_chart) }}" width="50" alt="Size Chart">
+                                            <div class="mt-2" id="sizeChartImageBlock">
+                                                <a target="_blank" href="{{ asset('front/images/size-charts/' . $category->size_chart) }}"><img src="{{ asset('front/images/size-charts/' . $category->size_chart) }}" width="50" alt="Size Chart"></a>
+                                                <a href="javascript:void(0)" id="deleteSizeChartImage" data-category-id="{{ $category->id }}" class="text-danger">Delete</a>
                                             </div>
                                         @endif
                                     </div>

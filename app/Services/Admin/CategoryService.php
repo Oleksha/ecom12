@@ -139,4 +139,32 @@ class CategoryService
         $message = 'Category deleted successfully!';
         return ['message' => $message];
     }
+
+    public function deleteCategoryImage($categoryId): array
+    {
+        $categoryImage = Category::where('id', $categoryId)->value('image');
+        if ($categoryImage) {
+            $categoryImagePath = 'front/images/categories/' . $categoryImage;
+            if (file_exists(public_path($categoryImagePath))) {
+                unlink(public_path($categoryImagePath));
+            }
+            Category::where('id', $categoryId)->update(['image' => null]);
+            return ['status' => true, 'message' => 'Category image deleted successfully!'];
+        }
+        return ['status' => false, 'message' => 'Category image not found!'];
+    }
+
+    public function deleteSizeChartImage(mixed $categoryId): array
+    {
+        $sizeChartImage = Category::where('id', $categoryId)->value('size_chart');
+        if ($sizeChartImage) {
+            $sizeChartImagePath = 'front/images/size-charts/' . $sizeChartImage;
+            if (file_exists(public_path($sizeChartImagePath))) {
+                unlink(public_path($sizeChartImagePath));
+            }
+            Category::where('id', $categoryId)->update(['size_chart' => null]);
+            return ['status' => true, 'message' => 'Size Chart image deleted successfully!'];
+        }
+        return ['status' => false, 'message' => 'Size Chart image not found!'];
+    }
 }

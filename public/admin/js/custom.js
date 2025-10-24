@@ -92,4 +92,50 @@ $(document).ready(function(){
             }
         });
     });
+
+    $(document).on("click", "#deleteCategoryImage", function(){
+        if (confirm('Are you sure you want to remove this Category Image?')) {
+            let category_id = $(this).data('category-id');
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "POST",
+                url: "/admin/delete-category-image",
+                data: { category_id: category_id},
+                success: function (response) {
+                    if (response['status'] === true) {
+                        alert(response['message']);
+                        $('#categoryImageBlock').remove();
+                    }
+                },
+                error: function () {
+                    alert("Error occurred while deleting the image.");
+                }
+            });
+        }
+    });
+
+    $(document).on("click", "#deleteSizeChartImage", function(){
+        if (confirm('Are you sure you want to remove this Size Chart Image?')) {
+            let category_id = $(this).data('category-id');
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "POST",
+                url: "/admin/delete-size-chart-image",
+                data: { category_id: category_id},
+                success: function (response) {
+                    if (response['status'] === true) {
+                        alert(response['message']);
+                        $('#sizeChartImageBlock').remove();
+                    }
+                },
+                error: function () {
+                    alert("Error occurred while deleting the image.");
+                }
+            });
+        }
+    });
 });
