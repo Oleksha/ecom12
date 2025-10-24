@@ -125,4 +125,18 @@ class CategoryService
         $category->save();
         return $message;
     }
+
+    public function updateCategoryStatus(array $data): int
+    {
+        $status = ($data['status'] == 'Active') ? 0 : 1;
+        Category::where('id', $data['category_id'])->update(['status' => $status]);
+        return $status;
+    }
+
+    public function deleteCategory(string $id): array
+    {
+        Category::where('id', $id)->delete();
+        $message = 'Category deleted successfully!';
+        return ['message' => $message];
+    }
 }

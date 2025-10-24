@@ -90,6 +90,16 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $result = $this->categoryService->deleteCategory($id);
+        return redirect()->back()->with('success_message', $result['message']);
+    }
+
+    public function updateCategoryStatus(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = $request->all();
+            $status = $this->categoryService->updateCategoryStatus($data);
+            return response()->json(['status' => $status, 'category_id' => $data['category_id']]);
+        }
     }
 }

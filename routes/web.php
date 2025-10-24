@@ -45,6 +45,7 @@ Route::prefix('admin')->group(function () {
 
         // Categories
         Route::resource('categories', CategoryController::class);
+        Route::post('update-category-status', [CategoryController::class, 'updateCategoryStatus']);
 
         // Admin Logout
         Route::get('logout', [AdminController::class, 'destroy'])->name('admin.logout');
