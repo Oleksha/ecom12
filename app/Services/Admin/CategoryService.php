@@ -15,6 +15,10 @@ class CategoryService
     {
         $categories = Category::with('parent_category')->get();
         $admin = Auth::guard('admin')->user();
+        $categoriesModuleCount = AdminsRole::where([
+            'subadmin_id' => $admin->id,
+            'module' => 'categories'
+        ])->count();
         $status = 'success';
         $message = '';
         $categoriesModule = [];
@@ -26,20 +30,14 @@ class CategoryService
                 'edit_access' => 1,
                 'full_access' => 1,
             ];
+        } elseif ($categoriesModuleCount == 0) {
+            $status = 'error';
+            $message = 'Эта функция ограничена для вас!';
         } else {
-            $categoriesModuleCount = AdminsRole::where([
-                'subadmin_id', $admin->id,
-                'module', 'categories'
-            ])->count();
-            if ($categoriesModuleCount == 0) {
-                $status = 'error';
-                $message = 'This feature is restricted for you!';
-            } else {
-                $categoriesModule = AdminsRole::where([
-                    'subadmin_id' => $admin->id,
-                    'module' => 'categories'
-                ])->first()->toArray();
-            }
+            $categoriesModule = AdminsRole::where([
+                'subadmin_id' => $admin->id,
+                'module' => 'categories'
+            ])->first()->toArray();
         }
         return [
             'categories' => $categories,

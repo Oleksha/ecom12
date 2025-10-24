@@ -30,11 +30,13 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <h3 class="card-title">Категории</h3>
-                                <a style="max-width: 250px; float:right; display: inline-block;"
-                                   href="{{ route('categories.create') }}"
-                                   class="btn btn-block btn-primary">
-                                    Добавить категорию
-                                </a>
+                                @if($categoriesModule['edit_access'] == 1 || $categoriesModule['full_access'] == 1)
+                                    <a style="max-width: 250px; float:right; display: inline-block;"
+                                       href="{{ route('categories.create') }}"
+                                       class="btn btn-block btn-primary">
+                                        Добавить категорию
+                                    </a>
+                                @endif
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -64,23 +66,27 @@
                                             <td>{{ $category->url }}</td>
                                             <td>{{ $category->created_at->format('F j, Y, g:i a') }}</td>
                                             <td>
-                                                @if($category->status == 1)
-                                                    <a class="updateCategoryStatus me-2"
-                                                       data-category-id="{{ $category->id }}"
-                                                       style="color: #3f6ed3" href="javascript:void(0)"><i class="fas fa-toggle-on" data-status="Active"></i></a>
-                                                @else
-                                                    <a class="updateCategoryStatus me-2"
-                                                       data-category-id="{{ $category->id }}"
-                                                       style="color: grey" href="javascript:void(0)"><i class="fas fa-toggle-off" data-status="Inactive"></i></a>
+                                                @if($categoriesModule['edit_access'] == 1 || $categoriesModule['full_access'] == 1)
+                                                    @if($category->status == 1)
+                                                        <a class="updateCategoryStatus me-2"
+                                                           data-category-id="{{ $category->id }}"
+                                                           style="color: #3f6ed3" href="javascript:void(0)"><i class="fas fa-toggle-on" data-status="Active"></i></a>
+                                                    @else
+                                                        <a class="updateCategoryStatus me-2"
+                                                           data-category-id="{{ $category->id }}"
+                                                           style="color: grey" href="javascript:void(0)"><i class="fas fa-toggle-off" data-status="Inactive"></i></a>
+                                                    @endif
+                                                    <a class="me-2" href="{{ route('categories.edit', $category->id) }}"><i class="fas fa-edit"></i></a>
+                                                    @if($categoriesModule['full_access'] == 1)
+                                                        <form action="{{ route('categories.destroy', $category->id) }}"
+                                                              method="POST" style="display: inline-block"
+                                                              onsubmit="return confirm('Are you sure to delete this category?')">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" style="border: none; background: none; color: #3f6ed3"><i class="fas fa-trash"></i></button>
+                                                        </form>
+                                                    @endif
                                                 @endif
-                                                <a class="me-2" href="{{ route('categories.edit', $category->id) }}"><i class="fas fa-edit"></i></a>
-                                                <form action="{{ route('categories.destroy', $category->id) }}"
-                                                      method="POST" style="display: inline-block"
-                                                      onsubmit="return confirm('Are you sure to delete this category?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" style="border: none; background: none; color: #3f6ed3"><i class="fas fa-trash"></i></button>
-                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
