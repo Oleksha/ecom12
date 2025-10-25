@@ -52,6 +52,7 @@ Route::prefix('admin')->group(function () {
 
         // Products
         Route::resource('products', ProductController::class);
+        Route::post('delete-category-image', [CategoryController::class, 'deleteCategoryImage']);
 
         // Admin Logout
         Route::get('logout', [AdminController::class, 'destroy'])->name('admin.logout');

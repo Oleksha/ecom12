@@ -42,4 +42,18 @@ class ProductService
             'message' => $message,
         ];
     }
+
+    public function updateProductStatus($data): int
+    {
+        $status = ($data['status'] == 'Active') ? 0 : 1;
+        Product::where('id', $data['product_id'])->update(['status' => $status]);
+        return $status;
+    }
+
+    public function deleteProduct(string $id): array
+    {
+        Product::where('id', $id)->delete();
+        $message = 'Product deleted successfully!';
+        return ['message' => $message];
+    }
 }

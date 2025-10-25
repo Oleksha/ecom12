@@ -74,6 +74,16 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $result = $this->productService->deleteProduct($id);
+        return redirect()->back()->with('success_message', $result['message']);
+    }
+
+    public function updateProductStatus(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = $request->all();
+            $status = $this->productService->updateProductStatus($data);
+            return response()->json(['status' => $status, 'product_id' => $data['product_id']]);
+        }
     }
 }
