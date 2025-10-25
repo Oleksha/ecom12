@@ -10,7 +10,7 @@ class ProductService
 {
     public function products(): array
     {
-        $products = Product::get();
+        $products = Product::with('category')->get();
 
         // Set Admin/Subadmin Permissions for Products
         $productsModuleCount = AdminsRole::where([

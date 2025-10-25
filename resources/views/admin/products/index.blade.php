@@ -53,6 +53,8 @@
                                         <th>Product Name</th>
                                         <th>Product Code</th>
                                         <th>Product Color</th>
+                                        <th>Category</th>
+                                        <th>Parent</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
@@ -63,6 +65,14 @@
                                             <td>{{ $product->product_name }}</td>
                                             <td>{{ $product->product_code }}</td>
                                             <td>{{ $product->product_color }}</td>
+                                            <td>{{ $product->category->name }}</td>
+                                            <td>
+                                                @if(isset($product->category->parent_category->name))
+                                                    {{ $product->category->parent_category->name }}
+                                                @else
+                                                    ROOT
+                                                @endif
+                                            </td>
                                             <td>
                                                 @if($productsModule['edit_access'] == 1 || $productsModule['full_access'] == 1)
                                                     @if($product->status == 1)
@@ -72,22 +82,22 @@
                                                         <a class="updateProductStatus" data-product-id="{{ $product->id }}"
                                                            style="color: gray" href="javascript:void(0)"><i class="fas fa-toggle-off" data-status="Inactive"></i></a>
                                                     @endif
-                                                    @if($productsModule['full_access'] == 1)
-                                                        <form action="{{ route('products.destroy', $product->id) }}"
-                                                              method="POST" style="display: inline-block;">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button class="confirmDelete"
-                                                                    name="Product"
-                                                                    title="Delete Product"
-                                                                    type="button"
-                                                                    data-module="product"
-                                                                    data-id="{{ $product->id }}"
-                                                                    style="border: none; background: none; color: #3f6ed3">
-                                                                <i class="fas fa-trash"></i>
-                                                            </button>
-                                                        </form>
-                                                    @endif
+                                                @endif
+                                                @if($productsModule['full_access'] == 1)
+                                                    <form action="{{ route('products.destroy', $product->id) }}"
+                                                          method="POST" style="display: inline-block;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="confirmDelete"
+                                                                name="Product"
+                                                                title="Delete Product"
+                                                                type="button"
+                                                                data-module="product"
+                                                                data-id="{{ $product->id }}"
+                                                                style="border: none; background: none; color: #3f6ed3">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
                                                 @endif
                                             </td>
                                         </tr>
