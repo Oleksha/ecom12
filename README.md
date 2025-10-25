@@ -1,4 +1,4 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p style="text-align: center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 Учебник по электронной коммерции на Laravel 12 с несколькими поставщиками
 
 # О проекте
@@ -34,7 +34,7 @@ Laravel — один из самых мощных и широко использ
 13. [Обновить данные администратора. Часть 1 | Создать страницу данных администратора](/documentation/13.md).
 14. [Обновить данные администратора. Часть 2 | Добавить/удалить изображение администратора](/documentation/14.md).
 15. [Роли и разрешения. Часть 1 | Отображение субадминистраторов в панели администратора](/documentation/15.md).
-16. [Роли и разрешения. Часть 2 | Активные/Неактивные/Удалить субадминистраторов](/documentation/16.md).
+16. [Роли и разрешения. Часть 2 | Активные/Неактивные/Удаление субадминистраторов](/documentation/16.md).
 17. [Роли и разрешения. Часть 3 | Управление субадминистраторами (добавление/редактирование)](/documentation/17.md).
 18. [Роли и разрешения. Часть 4 | Управление ролями субадминистраторов](/documentation/18.md).
 19. [Модуль «Категории». Часть 1 | Создание таблицы и начальное заполнение категорий](/documentation/19.md).
@@ -46,3 +46,4 @@ Laravel — один из самых мощных и широко использ
 25. [Модуль «Категории». Часть 7 | Удаление изображение категории и иконок через AJAX](/documentation/25.md).
 26. [Модуль «Категории». Часть 8 | Ролевой доступ для субадминистраторов](/documentation/26.md).
 27. [Интеграция SweetAlert2 для подтверждения удаления | jQuery Alerts](/documentation/27.md).
+28. [Модуль «Продукты» (I) | Создание таблицы продуктов, модели и контроллера ресурсов в панели администратора](/documentation/28.md).
