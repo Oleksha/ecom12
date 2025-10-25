@@ -79,11 +79,18 @@
                                                     <a class="me-2" href="{{ route('categories.edit', $category->id) }}"><i class="fas fa-edit"></i></a>
                                                     @if($categoriesModule['full_access'] == 1)
                                                         <form action="{{ route('categories.destroy', $category->id) }}"
-                                                              method="POST" style="display: inline-block"
-                                                              onsubmit="return confirm('Are you sure to delete this category?')">
+                                                              method="POST" style="display: inline-block">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" style="border: none; background: none; color: #3f6ed3"><i class="fas fa-trash"></i></button>
+                                                            <button class="confirmDelete"
+                                                                    name="Category"
+                                                                    title="DeleteCategory"
+                                                                    type="button"
+                                                                    data-module="category"
+                                                                    data-id="{{ $category->id }}"
+                                                                    style="border: none; background: none; color: #3f6ed3">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
                                                         </form>
                                                     @endif
                                                 @endif

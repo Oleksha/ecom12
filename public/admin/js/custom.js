@@ -138,4 +138,30 @@ $(document).ready(function(){
             });
         }
     });
+
+    $(document).on('click', '.confirmDelete', function (e) {
+        e.preventDefault();
+        let button = $(this);
+        let module = button.data('module');
+        let module_id = button.data('id');
+        let form = button.closest('form');
+        let redirectUrl = '/admin/delete-' + module + '/' + module_id;
+        Swal.fire({
+            title: 'Вы уверены?',
+            text: "Вы не сможете это изменить!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33d33',
+            confirmButtonText: 'Да, удалить!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if (form.length > 0) {
+                    form.submit(); // Отправить форму (используется в модуле категорий)
+                } else {
+                    window.location.href = redirectUrl; // Перенаправление для удаления субадмина
+                }
+            }
+        });
+    });
 });

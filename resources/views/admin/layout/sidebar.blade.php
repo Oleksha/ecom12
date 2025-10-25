@@ -57,6 +57,7 @@
                             </a>
                         </li>
                         @if(Auth::guard('admin')->user()->role == 'admin')
+                            <!-- Admins / Sub Admins -->
                             <li class="nav-item">
                                 <a href="{{ url('admin/subadmins') }}" class="nav-link {{ (Session::get('page') == 'subadmins') ? 'active' : '' }}">
                                     <i class="nav-icon bi bi-circle"></i>

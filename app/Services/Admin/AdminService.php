@@ -5,6 +5,7 @@ namespace App\Services\Admin;
 use App\Models\Admin;
 use App\Models\AdminsRole;
 use Auth;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
@@ -29,7 +30,7 @@ class AdminService
                 }
                 return 'success'; // Return success if login is successful
             } else {
-               return 'invalid'; // Return invalid if credentials are incorrect
+                return 'invalid'; // Return invalid if credentials are incorrect
             }
         } else {
             return 'invalid'; // Return invalid if email is not found
@@ -45,7 +46,7 @@ class AdminService
         }
     }
 
-    public function updatePassword($data)
+    public function updatePassword($data): array
     {
         // Check if the Current Password is correct
         if (Hash::check($data['current_pwd'], Auth::guard('admin')->user()->password)) {
@@ -53,7 +54,7 @@ class AdminService
             if ($data['new_pwd'] == $data['confirm_pwd']) {
                 Admin::where('email', Auth::guard('admin')->user()->email)
                     ->update(['password' => Hash::make($data['new_pwd'])]);
-                $status ="success";
+                $status = "success";
                 $message = 'Password has been updated successfully!';
             } else {
                 $status = "error";
@@ -66,7 +67,7 @@ class AdminService
         return ['status' => $status, 'message' => $message];
     }
 
-    public function updateDetails($request)
+    public function updateDetails($request): void
     {
         $data = $request->all();
 
@@ -88,18 +89,18 @@ class AdminService
         }
 
         // Update Admin Details
-        Admin::where('email',Auth::guard('admin')->user()->email)->update([
+        Admin::where('email', Auth::guard('admin')->user()->email)->update([
             'name' => $data['name'],
             'mobile' => $data['mobile'],
             'image' => $imageName,
         ]);
     }
 
-    public function deleteProfileImage($adminId)
+    public function deleteProfileImage($adminId): array
     {
         $profileImage = Admin::where('id', $adminId)->value('image');
         if ($profileImage) {
-            $profileImagePath = 'admin/images/photos/' . $profileImage;
+            $profileImagePath = 'admin/images/photos/'.$profileImage;
             if (file_exists(public_path($profileImagePath))) {
                 unlink(public_path($profileImagePath));
             }
@@ -110,7 +111,7 @@ class AdminService
         }
     }
 
-    public function subadmins()
+    public function subadmins(): Collection
     {
         return Admin::where('role', 'subadmin')->get();
     }
@@ -152,8 +153,8 @@ class AdminService
                 // Get Image Extension
                 $extension = $image_tmp->getClientOriginalExtension();
                 // Generate New Image Name
-                $imageName = rand(111, 99999) . '.' . $extension;
-                $image_path = 'admin/images/photos/' . $imageName;
+                $imageName = rand(111, 99999).'.'.$extension;
+                $image_path = 'admin/images/photos/'.$imageName;
                 // Save image in specified path
                 $image->save($image_path);
             }
@@ -185,7 +186,9 @@ class AdminService
         AdminsRole::where('subadmin_id', $data['subadmin_id'])->delete();
         // Assign new roles dynamically
         foreach ($data as $key => $value) {
-            if (!is_array($value)) continue; // Skip non-module fields
+            if (!is_array($value)) {
+                continue;
+            } // Skip non-module fields
             $view = $value['view'] ?? 0;
             $edit = $value['edit'] ?? 0;
             $full = $value['full'] ?? 0;

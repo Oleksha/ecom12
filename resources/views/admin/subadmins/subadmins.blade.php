@@ -79,10 +79,15 @@
                                                    href="{{ url('admin/add-edit-subadmin/' . $subadmin->id) }}"><i class="fas fa-edit"></i></a>
                                                 <a title="Set Permissions for Subadmin" class="ms-2"
                                                    href="{{ url('admin/update-role/' . $subadmin->id) }}"><i class="fas fa-unlock"></i></a>
-                                                <a class="ms-2"
+                                                <a class="confirmDelete ms-2"
                                                    style="color: #3f6ed3"
+                                                   name="Subadmin"
                                                    title="Delete Subadmin"
-                                                   href="{{ url('admin/delete-subadmin/' . $subadmin->id) }}"><i class="fas fa-trash"></i></a>
+                                                   href="javascript:void(0)"
+                                                   data-module="subadmin"
+                                                   data-id="{{ $subadmin->id }}">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach

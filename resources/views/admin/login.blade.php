@@ -84,14 +84,14 @@
                 <div class="input-group mb-1">
                     <div class="form-floating">
                         <input id="loginEmail" type="email" class="form-control" name="email" placeholder="Email" @if(isset($_COOKIE["email"])) value="{{ $_COOKIE["email"] }}" @endif>
-                        <label for="loginEmail">Электронная почта"</label>
+                        <label for="loginEmail">Электронная почта</label>
                     </div>
                     <div class="input-group-text"><span class="bi bi-envelope"></span></div>
                 </div>
                 <div class="input-group mb-1">
                     <div class="form-floating">
                         <input id="loginPassword" name="password" type="password" class="form-control" placeholder="Password"  @if(isset($_COOKIE["password"])) value="{{ $_COOKIE["password"] }}" @endif>
-                        <label for="loginPassword">Пароль/label>
+                        <label for="loginPassword">Пароль</label>
                     </div>
                     <div class="input-group-text"><span class="bi bi-lock-fill"></span></div>
                 </div>

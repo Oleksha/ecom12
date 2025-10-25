@@ -19,8 +19,7 @@ class AdminController extends Controller
     public function __construct(
         protected AdminService $adminService
     )
-    {
-    }
+    {}
 
     /**
      * Display a listing of the resource.
@@ -98,6 +97,9 @@ class AdminController extends Controller
         return redirect()->route('admin.login');
     }
 
+    /**
+     * Verify Admin Password using AdminService
+     */
     public function verifyPassword(Request $request)
     {
         $data = $request->all();
