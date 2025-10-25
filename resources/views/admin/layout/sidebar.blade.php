@@ -83,7 +83,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('admin/products') }}" class="nav-link {{ (Session::get('page') == 'products') ? 'active' : '' }}">
+                            <a href="{{ route('products.index') }}" class="nav-link {{ (Session::get('page') == 'products') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Products</p>
                             </a>

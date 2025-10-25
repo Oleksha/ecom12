@@ -3,16 +3,30 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\Admin\ProductService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
+    public function __construct(
+        protected ProductService $productService,
+    )
+    {}
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        Session::put('page', 'products');
+        $result = $this->productService->products();
+        if ($result['status'] == 'error') {
+            return redirect('admin/dashboard')->with('error_message', $result['message']);
+        }
+        return view('admin.products.index', [
+            'products' => $result['products'],
+            'productsModule' => $result['productsModule']
+        ]);
     }
 
     /**
