@@ -16,15 +16,16 @@ class AdminsTableSeeder extends Seeder
     {
         $password = Hash::make('123456');
         $admin = new Admin;
-        /*$admin->name = 'Oleg Deryabin';
+        $admin->name = 'Oleg Deryabin';
         $admin->role = 'admin';
         $admin->mobile = '79061291066';
         $admin->email = 'admin@mail.ru';
         $admin->password = $password;
         $admin->status = 1;
-        $admin->save();*/
+        $admin->save();
+
         $admin = new Admin;
-        $admin->name = 'Oleksha';
+        $admin->name = 'Amit Gupta';
         $admin->role = 'subadmin';
         $admin->mobile = '97000000000';
         $admin->email = 'oleksha@mail.ru';

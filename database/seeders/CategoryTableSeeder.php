@@ -20,6 +20,7 @@ class CategoryTableSeeder extends Seeder
             ['parent_id' => 1, 'name' => 'Мужская', 'url' => 'men'],
             ['parent_id' => 1, 'name' => 'Женская', 'url' => 'women'],
             ['parent_id' => 1, 'name' => 'Детская', 'url' => 'kids'],
+            ['parent_id' => 4, 'name' => 'Мужские футболки', 'url' => 'men-t-shirts'],
         ];
         foreach ($categories as $data) {
             Category::create([
