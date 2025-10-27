@@ -82,7 +82,7 @@
                                                         <a class="updateProductStatus" data-product-id="{{ $product->id }}"
                                                            style="color: gray" href="javascript:void(0)"><i class="fas fa-toggle-off" data-status="Inactive"></i></a>
                                                     @endif
-                                                    <a href="{{ route('products.edit', $product->id) }}"><i class="fas fa-edit"></i></a>
+                                                    <a class="ms-1" href="{{ route('products.edit', $product->id) }}"><i class="fas fa-edit"></i></a>
                                                 @endif
                                                 @if($productsModule['full_access'] == 1)
                                                     <form action="{{ route('products.destroy', $product->id) }}"

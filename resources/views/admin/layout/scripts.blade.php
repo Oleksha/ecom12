@@ -240,3 +240,60 @@
 </script>
 <!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<!-- Dropzone JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
+<script>
+    Dropzone.autoDiscover = false;
+
+    // Main Image Dropzone
+    let mainImageDropzone = new Dropzone('#mainImageDropzone', {
+        url: "{{ route('product.upload.image') }}",
+        maxFiles: 1,
+        acceptedFiles: "image/*",
+        maxFilesize: 0.5,
+        addRemoveLinks: true,
+        dictDefaultMessage: 'Drag & drop product image or click to upload',
+        headers: {
+            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+        },
+        success: function (file, response) {
+            document.getElementById('main_image_hidden').value = response.fileName;
+        },
+        error: function (file, message) {
+            alert(message);
+            this.removeFile(file);
+        },
+        init: function () {
+            this.on('maxfilesexceeded', function (file) {
+                this.rmoveAllFiles();
+                this.addFile(file);
+            });
+        }
+    });
+
+    // Product Video Dropzone
+    let productVideoDropzone = new Dropzone('#productVideoDropzone', {
+        url: "{{ route('product.upload.video') }}",
+        maxFiles: 1,
+        acceptedFiles: "video/*",
+        maxFilesize: 2,
+        addRemoveLinks: true,
+        dictDefaultMessage: 'Drag & drop product video or click to upload',
+        headers: {
+            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+        },
+        success: function (file, response) {
+            document.getElementById('product_video_hidden').value = response.fileName;
+        },
+        error: function (file, message) {
+            alert(message);
+            this.removeFile(file);
+        },
+        init: function () {
+            this.on('maxfilesexceeded', function (file) {
+                this.rmoveAllFiles();
+                this.addFile(file);
+            });
+        }
+    });
+</script>

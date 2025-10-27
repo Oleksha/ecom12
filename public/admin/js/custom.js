@@ -156,10 +156,16 @@ $(document).ready(function(){
             confirmButtonText: 'Да, удалить!',
         }).then((result) => {
             if (result.isConfirmed) {
-                if (form.length > 0) {
+                // Проверяем, существует ли форма и есть ли маршрут удаления.
+                if (form.length > 0 && form.attr('action') && form.attr('method') === 'POST') {
+                    // Создать и добавляет скрытый input _method, если он отсутствует.
+                    if (form.find("input['_method']").length === 0) {
+                        form.append('<input type="hidden" name="_method" value="DELETE">');
+                    }
                     form.submit(); // Отправить форму (используется в модуле категорий)
                 } else {
-                    window.location.href = redirectUrl; // Перенаправление для удаления субадмина
+                    // Перенаправление, если отсутствует форма удаления.
+                    window.location.href = redirectUrl;
                 }
             }
         });

@@ -13,8 +13,9 @@ class ProductController extends Controller
 {
     public function __construct(
         protected ProductService $productService,
-    )
-    {}
+    ) {
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -95,5 +96,35 @@ class ProductController extends Controller
             $status = $this->productService->updateProductStatus($data);
             return response()->json(['status' => $status, 'product_id' => $data['product_id']]);
         }
+    }
+
+    public function uploadImage(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $fileName = $this->productService->handleImageUpload($request->file('file'));
+            return response()->json(['fileName' => $fileName]);
+        }
+        return response()->json(['error' => 'No file was uploaded.'], 400);
+    }
+
+    public function uploadVideo(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $fileName = $this->productService->handleVideoUpload($request->file('file'));
+            return response()->json(['fileName' => $fileName]);
+        }
+        return response()->json(['error' => 'No file was uploaded.'], 400);
+    }
+
+    public function deleteProductMainImage(string $id)
+    {
+        $message = $this->productService->deleteProductMainImage($id);
+        return redirect()->back()->with('success_message', $message);
+    }
+
+    public function deleteProductVideo(string $id)
+    {
+        $message = $this->productService->deleteProductVideo($id);
+        return redirect()->back()->with('success_message', $message);
     }
 }

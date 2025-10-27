@@ -129,10 +129,28 @@
                                                value="{{ old('product_gst', $product->product_gst ?? '') }}">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="product_weight" class="form-label">Вес продукта (кг)</label>
+                                        <label for="product_weight" class="form-label">Вес продукта (г)</label>
                                         <input type="number" step="0.01" class="form-control"
                                                id="product_weight" name="product_weight"
                                                value="{{ old('product_weight', $product->product_weight ?? '') }}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="main_image_dropzone" class="form-label">Product Video (Max 2 MB)</label>
+                                        <div class="dropzone" id="productVideoDropzone"></div>
+
+                                        @if(!empty($product['product_video']))
+                                            <a target="_blank" href="{{ url('front/videos/products/' . $product['product_video']) }}">
+                                                View Video
+                                            </a> | <a class="confirmDelete" href="javascript:void(0)"
+                                               data-module="product-video" data-id="{{ $product['id'] }}">Delete Video</a>
+                                        @endif
+
+                                        <!-- Hidden input to send uploaded image -->
+                                        <input type="hidden" name="product_video" id="product_video_hidden">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="product_video_dropzone" class="form-label">Product Main Image (Max 500 KB)</label>
+                                        <div class="dropzone" id="mainImageDropzone"></div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="wash_care" class="form-label">Wash Care</label>
