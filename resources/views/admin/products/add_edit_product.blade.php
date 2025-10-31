@@ -81,26 +81,26 @@
                                         </select>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="product_name" class="form-label">Имя продукта</label>
+                                        <label for="product_name" class="form-label">Имя продукта*</label>
                                         <input type="text" class="form-control" id="product_name"
                                                name="product_name" placeholder="Введите имя категории"
-                                               value="{{ old('product_name', $product->name ?? '') }}">
+                                               value="{{ old('product_name', $product->product_name ?? '') }}">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="product_code" class="form-label">Код продукта</label>
+                                        <label for="product_code" class="form-label">Код продукта*</label>
                                         <input type="text" class="form-control" id="product_code"
                                                name="product_code" placeholder="Введите код продукта"
-                                               value="{{ old('product_code', $product->code ?? '') }}">
+                                               value="{{ old('product_code', $product->product_code ?? '') }}">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="product_color" class="form-label">Цвет продукта</label>
+                                        <label for="product_color" class="form-label">Цвет продукта*</label>
                                         <input type="text" class="form-control" id="product_color"
                                                name="product_color" placeholder="Введите цвет продукта"
-                                               value="{{ old('product_color', $product->color ?? '') }}">
+                                               value="{{ old('product_color', $product->product_color ?? '') }}">
                                     </div>
                                     @php $familyColors = \App\Models\Color::colors() @endphp
                                     <div class="mb-3">
-                                        <label for="family_color" class="form-label">Семейство цветов</label>
+                                        <label for="family_color" class="form-label">Семейство цветов*</label>
                                         <select name="family_color" class="form-select" id="family_color">
                                             <option value="">Выберите цвет...</option>
                                             @foreach($familyColors as $color)
@@ -157,6 +157,18 @@
                                     <div class="mb-3">
                                         <label for="product_video_dropzone" class="form-label">Product Main Image (Max 500 KB)</label>
                                         <div class="dropzone" id="mainImageDropzone"></div>
+
+                                        @if(!empty($product['main_image']))
+                                            <a target="_blank" href="{{ url('front/images/products/' . $product['main_image']) }}">
+                                                <img style="width: 50px; margin: 10px" src="{{ asset('/front/images/products/' . $product['main_image']) }}" alt="{{ $product['product_name'] }}">
+                                            </a>
+                                            <a style="color: #3f6ed3" class="confirmDelete"
+                                               title="DeleteProduct Image" href="javascript:void(0)"
+                                               data-module="product-main-image" data-id="{{ $product['id'] }}"><i class="fas fa-trash"></i></a>
+                                        @endif
+
+                                        <!-- Hidden input to send uploaded image -->
+                                        <input type="hidden" name="main_image" id="main_image_hidden">
                                     </div>
                                     <div class="mb-3">
                                         <label for="wash_care" class="form-label">Wash Care</label>

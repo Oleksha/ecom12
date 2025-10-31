@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Services\Admin\ProductService;
@@ -45,7 +46,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         $messages = $this->productService->addEditProduct($request);
         return redirect()->route('products.index')->with('success_message', $messages);
@@ -73,7 +74,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ProductRequest $request, string $id)
     {
         $request->merge(['id' => $id]);
         $message = $this->productService->addEditProduct($request);
