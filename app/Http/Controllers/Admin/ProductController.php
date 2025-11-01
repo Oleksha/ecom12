@@ -66,7 +66,7 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $title = "Edit Product";
-        $product = Product::findOrFail($id);
+        $product = Product::with('product_images')->findOrFail($id);
         $getCategories = Category::getCategories('Admin');
         return view('admin.products.add_edit_product', compact('title', 'product', 'getCategories'));
     }
@@ -126,6 +126,27 @@ class ProductController extends Controller
     public function deleteProductVideo(string $id)
     {
         $message = $this->productService->deleteProductVideo($id);
+        return redirect()->back()->with('success_message', $message);
+    }
+
+    public function uploadImages(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $fileName = $this->productService->handleImageUpload($request->file('file'));
+            return response()->json(['fileName' => $fileName]);
+        }
+        $file = $request->file('file');
+        // Move to temp directory
+        $file->move(public_path('temp'), $filename);
+        return response()->json([
+            'fileName' => $filename,
+            'success' => true
+        ]);
+    }
+
+    public function deleteProductImage(string $id)
+    {
+        $message = $this->productService->deleteProductImage($id);
         return redirect()->back()->with('success_message', $message);
     }
 }

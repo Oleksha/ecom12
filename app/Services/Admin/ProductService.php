@@ -5,6 +5,7 @@ namespace App\Services\Admin;
 use App\Models\AdminsRole;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductsImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -144,6 +145,34 @@ class ProductService
         $product->product_video = $request->product_video ?? $product->product_video;
 
         $product->save();
+
+        // Upload Alternate Images
+        if (!empty($data['product_images'])) {
+            // Ensure we have an array
+            $imageFiles = is_array($data['product_images'])
+                ? $data['product_images']
+                : explode(',', $data['product_images']);
+
+            // Remove any empty values
+            $imageFiles = array_filter($imageFiles);
+
+            foreach ($imageFiles as $index => $filename) {
+                $sourcePath = public_path('temp/' . $filename);
+                $destinationPath = public_path('front/images/products/' . $filename);
+
+                if (file_exists($sourcePath)) {
+                    @copy($sourcePath, $destinationPath);
+                    @unlink($sourcePath);
+                }
+
+                ProductsImage::create([
+                    'product_id' => $product->id,
+                    'image' => $filename,
+                    'sort' => $index,
+                    'status' => 1,
+                ]);
+            }
+        }
 
         return $message;
     }
