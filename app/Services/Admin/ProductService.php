@@ -179,14 +179,14 @@ class ProductService
 
     public function handleImageUpload($file): string
     {
-        $imageName = time() . '.' . $file->getClientOriginalName();
+        $imageName = time() . '.' . rand(1111, 9999) . '.' . $file->getClientOriginalExtension();
         $file->move(public_path('front/images/products'), $imageName);
         return $imageName;
     }
 
     public function handleVideoUpload($file)
     {
-        $videoName = time() . '.' . $file->getClientOriginalName();
+        $videoName = time() . '.' . $file->getClientOriginalExtension();
         $file->move(public_path('front/videos/products'), $videoName);
         return $videoName;
     }
@@ -235,5 +235,28 @@ class ProductService
         Product::where('id', $id)->update(['product_video' => null]);
 
         return 'Product Video has been deleted successfully!';
+    }
+
+    public function deleteProductImage(string $id)
+    {
+        // Get Product Image
+        $product = ProductsImage::select('image')->where('id', $id)->first();
+
+        if (!$product || !$product->image) {
+            return 'No image found';
+        }
+
+        // Get Product Image Path
+        $image_path = public_path('front/images/products/' . $product->image);
+
+        // Delete Product Image if exists
+        if (file_exists($image_path)) {
+            unlink($image_path);
+        }
+
+        // Delete Product Image from products_images table
+        ProductsImage::where('id', $id)->delete();
+
+        return 'Product image has been deleted successfully!';
     }
 }
