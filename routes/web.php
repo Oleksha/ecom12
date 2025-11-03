@@ -56,6 +56,8 @@ Route::prefix('admin')->group(function () {
         Route::post('product/upload-image', [ProductController::class, 'uploadImage'])->name('product.upload.image');
         Route::post('product/upload-images', [ProductController::class, 'uploadImages'])->name('product.upload.images');
         Route::post('product/delete-temp-image', [ProductController::class, 'deleteTempImage'])->name('product.delete.temp.image');
+        Route::post('/products/delete-temp-video', [ProductController::class, 'deleteTempProductVideo'])->name('product.delete.temp.video');
+        Route::post('/product/delete-dropzone-image', [ProductController::class, 'deleteDropzoneImage'])->name('admin.product.delete-image');
         Route::post('product/update-image-sorting', [ProductController::class, 'updateImageSorting'])->name('admin.product.update-image-sorting');
         Route::get('delete-product-image/{id?}', [ProductController::class, 'deleteProductImage']);
         Route::post('product/upload-video', [ProductController::class, 'uploadVideo'])->name('product.upload.video');

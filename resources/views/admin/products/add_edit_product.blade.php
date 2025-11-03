@@ -229,6 +229,7 @@
                                     @endif
                                     <div class="mb-3">
                                         <label for="product_video_dropzone" class="form-label">Product Main Image (Max 500 KB)</label>
+                                        <div id="mainImageDropzoneError" style="color: red; display: none;"></div>
                                         <div class="dropzone" id="mainImageDropzone"></div>
 
                                         @if(!empty($product['main_image']))

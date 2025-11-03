@@ -343,4 +343,16 @@ class ProductService
             }
         }
     }
+
+    public function deleteDropzoneImage(string $imageName): bool
+    {
+        $imagePath = public_path('front/images/products/' . $imageName);
+        return file_exists($imagePath) && unlink($imagePath);
+    }
+
+    public function deleteDropzoneVideo(string $videoName): bool
+    {
+        $videoPath = public_path('front/videos/products/' . $videoName);
+        return file_exists($videoPath) && unlink($videoPath);
+    }
 }

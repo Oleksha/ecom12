@@ -247,22 +247,62 @@
 <script>
     Dropzone.autoDiscover = false;
 
-    // Main Image Dropzone
+    // Product Main Image Dropzone
     let mainImageDropzone = new Dropzone('#mainImageDropzone', {
         url: "{{ route('product.upload.image') }}",
         maxFiles: 1,
         acceptedFiles: "image/*",
         maxFilesize: 0.5,
         addRemoveLinks: true,
-        dictDefaultMessage: 'Drag & drop product image or click to upload',
+        dictDefaultMessage: 'Перетащите изображение продукта или щелкните, чтобы загрузить',
         headers: {
             'X-CSRF-TOKEN': "{{ csrf_token() }}"
         },
         success: function (file, response) {
+            // Сохраняем имя файла для ссылки на него при удалении.
+            file.uploadedFileName = response.fileName;
             document.getElementById('main_image_hidden').value = response.fileName;
         },
+        removedfile: function (file) {
+            // Необязательно: проверяем, был ли файл успешно загружен.
+            if (file.uploadedFileName) {
+                $.ajax({
+                    url: "{{ route('admin.product.delete-image') }}", // При необходимости скорректируйте маршрут.
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        image: file.uploadedFileName
+                    },
+                    success: function (result) {
+                        console.log("Основное изображение успешно удалено.");
+                        // Очищаем скрытое поле, если изображение удалено.
+                        document.getElementById("main_image_hidden").value = '';
+                    },
+                    error: function () {
+                        console.log("Ошибка при удалении основного изображения.");
+                    }
+                });
+            }
+            // Удаляем предварительный просмотр из Dropzone UI
+            let previewElement = file.previewElement;
+            if (previewElement !== null) {
+                previewElement.parentNode.removeChild(previewElement);
+            }
+        },
         error: function (file, message) {
-            alert(message);
+            if(!file.alreadyRejected) {
+                file.alreadyRejected = true;
+                // Показываем сообщение об ошибке в контейнере вместо использования alert()
+                let errorContainer = document.getElementById('mainImageDropzoneError');
+                if (errorContainer) {
+                    errorContainer.innerText = typeof message === 'string' ? message : message.message;
+                    errorContainer.style.display = 'block';
+                    // Скрываем через 4 секунды
+                    setTimeout(() => {
+                        errorContainer.style.display = 'none';
+                    }, 4000);
+                }
+            }
             this.removeFile(file);
         },
         init: function () {
@@ -278,29 +318,26 @@
         url: "{{ route('product.upload.images') }}",
         maxFiles: 10,
         acceptedFiles: "image/*",
-        parallelUploads: 10, // Add this line to allow parallel uploads
-        uploadMultiple: false, // Keep this false unless you want to send all files in one request
+        parallelUploads: 10, // Добавьте эту строку, чтобы разрешить параллельные загрузки.
+        uploadMultiple: false, // Оставьте это значение false, если вы не хотите отправлять все файлы одним запросом.
         maxFilesize: 0.5,
         addRemoveLinks: true,
-        dictDefaultMessage: 'Drag & drop product images or click to upload',
+        dictDefaultMessage: 'Перетащите изображения продукта или щелкните, чтобы загрузить',
         headers: {
             'X-CSRF-TOKEN': "{{ csrf_token() }}"
         },
         init: function () {
             this.on('success', function (file, response) {
-                // Append filename to hidden input
+                // Добавить имя файла в скрытое поле ввода
                 let hiddenInput = document.getElementById('product_images_hidden');
                 let currentValue = hiddenInput.value;
-
                 if (currentValue === '') {
                     hiddenInput.value = response.fileName;
                 } else {
                     hiddenInput.value = currentValue + ',' + response.fileName;
                 }
-
                 file.uploadedFileName = response.fileName;
             });
-
             this.on('removedfile', function (file) {
                 if (file.uploadedFileName) {
                     let hiddenInput = document.getElementById('product_images_hidden');
@@ -309,8 +346,7 @@
 
                     files = files.filter(name => name !== file.uploadedFileName);
                     hiddenInput.value = files.join(',');
-
-                    // Optional: Delete the file from server
+                    // Необязательно: удалить файл с сервера.
                     $.ajax({
                         url: "{{ route('product.delete.temp.image') }}",
                         type: "POST",
@@ -331,16 +367,28 @@
         acceptedFiles: "video/*",
         maxFilesize: 2,
         addRemoveLinks: true,
-        dictDefaultMessage: 'Drag & drop product video or click to upload',
+        dictDefaultMessage: 'Перетащите видео о продукте или нажмите, чтобы загрузить.',
         headers: {
             'X-CSRF-TOKEN': "{{ csrf_token() }}"
         },
         success: function (file, response) {
             document.getElementById('product_video_hidden').value = response.fileName;
+            file.uploadedFileName = response.fileName;
         },
-        error: function (file, message) {
-            alert(message);
-            this.removeFile(file);
+        removedfile: function (file) {
+            if (file.uploadedFileName) {
+                document.getElementById('product_video_hidden').value = '';
+                $.ajax({
+                    url: "{{ route('product.delete.temp.video') }}",
+                    type: "POST",
+                    data: { filename: file.uploadedFileName },
+                    headers: { 'X-CSRF-TOKEN': "{{ csrf_token() }}" }
+                });
+            }
+            let previewElement = file.previewElement;
+            if (previewElement !== null) {
+                previewElement.parentNode.removeChild(previewElement);
+            }
         },
         init: function () {
             this.on('maxfilesexceeded', function (file) {
