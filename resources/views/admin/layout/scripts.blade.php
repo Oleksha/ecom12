@@ -227,6 +227,8 @@
 </script>
 <!-- jQuery -->
 <script src="{{ asset('admin/js/jquery-3.7.1.min.js') }}"></script>
+<!-- jQuery UI -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js"></script>
 <!-- Custom Script -->
 <script src="{{ asset('admin/js/custom.js') }}"></script>
 <!-- Datatable -->
@@ -344,6 +346,33 @@
             this.on('maxfilesexceeded', function (file) {
                 this.rmoveAllFiles();
                 this.addFile(file);
+            });
+        }
+    });
+
+    // Product Image Sort Script
+    $('#sortable-images').sortable({
+        helper: 'clone',
+        placeholder: 'sortable-placeholder',
+        forcePlaceholderSize: true,
+        scroll: true,
+        axis: 'x', // restrict to horizontal only
+        update: function (event, ui) {
+            let sortedIds = [];
+            $('#sortable_images, .sortable-item').each(function (index) {
+                sortedIds.push({
+                    id: $(this).data('id'),
+                    sort: index
+                });
+
+            });
+            $.ajax({
+                url: "{{ route('admin.product.update-image-sorting') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    sorted_images: sortedIds
+                }
             });
         }
     });

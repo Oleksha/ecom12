@@ -334,4 +334,13 @@ class ProductService
         ProductsAttribute::where('id', $id)->delete();
         return 'Product Attribute has been deleted successfully!';
     }
+
+    public function updateImageSorting($sortedImages): void
+    {
+        foreach ($sortedImages as $imageData) {
+            if (isset($imageData['id']) && isset($imageData['sort'])) {
+                ProductsImage::where('id', $imageData['id'])->update(['sort' => $imageData['sort']]);
+            }
+        }
+    }
 }

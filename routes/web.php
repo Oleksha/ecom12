@@ -56,9 +56,10 @@ Route::prefix('admin')->group(function () {
         Route::post('product/upload-image', [ProductController::class, 'uploadImage'])->name('product.upload.image');
         Route::post('product/upload-images', [ProductController::class, 'uploadImages'])->name('product.upload.images');
         Route::post('product/delete-temp-image', [ProductController::class, 'deleteTempImage'])->name('product.delete.temp.image');
+        Route::post('product/update-image-sorting', [ProductController::class, 'updateImageSorting'])->name('admin.product.update-image-sorting');
         Route::get('delete-product-image/{id?}', [ProductController::class, 'deleteProductImage']);
         Route::post('product/upload-video', [ProductController::class, 'uploadVideo'])->name('product.upload.video');
-        Route::get('delete-product-mail-image/{id?}', [ProductController::class, 'deleteProductMainImage']);
+        Route::get('delete-product-main-image/{id?}', [ProductController::class, 'deleteProductMainImage']);
         Route::get('delete-product-video/{id?}', [ProductController::class, 'deleteProductVideo']);
 
         // Attribute Product

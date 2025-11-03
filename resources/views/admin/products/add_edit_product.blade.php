@@ -232,9 +232,7 @@
                                         <div class="dropzone" id="mainImageDropzone"></div>
 
                                         @if(!empty($product['main_image']))
-                                            <a target="_blank" href="{{ url('front/images/products/' . $product['main_image']) }}">
-                                                <img style="width: 50px; margin: 10px" src="{{ asset('/front/images/products/' . $product['main_image']) }}" alt="{{ $product['product_name'] }}">
-                                            </a>
+                                            <a target="_blank" href="{{ url('front/images/products/' . $product['main_image']) }}"><img style="width: 50px; margin: 10px" src="{{ asset('/front/images/products/' . $product['main_image']) }}" alt="{{ $product['product_name'] }}"></a>
                                             <a style="color: #3f6ed3" class="confirmDelete"
                                                title="DeleteProduct Image" href="javascript:void(0)"
                                                data-module="product-main-image" data-id="{{ $product['id'] }}"><i class="fas fa-trash"></i></a>
@@ -250,21 +248,30 @@
                                         <div class="dropzone" id="productImagesDropzone"></div>
 
                                         @if(isset($product->product_images) && $product->product_images->count() > 0)
-                                            @foreach($product->product_images as $img)
-                                                <div style="display: inline-block; position: relative; margin: 5px;">
-                                                    <a target="_blank"
-                                                       href="{{ url('front/images/products/' . $img->image) }}">
-                                                        <img src="{{ asset('front/images/products/' . $img->image) }}"
-                                                             style="width: 50px" alt="">
-                                                    </a>
-                                                    <a href="javascript:void(0)" class="confirmDelete"
-                                                       data-module="product-image" data-id="{{ $img->id }}"
-                                                       data-image="{{ $img->image }}">
-                                                        <i class="fas fa-trash"
-                                                           style="position: absolute; top: 0; right: 0; color: red;"></i>
-                                                    </a>
-                                                </div>
-                                            @endforeach
+                                            @if($product->product_images->count() > 1)
+                                                {{-- Instruction Line --}}
+                                                <p class="drag-instruction">
+                                                    <i class="fas fa-arrows-alt"></i> Перетащите изображения ниже, чтобы изменить их порядок.
+                                                </p>
+                                            @endif
+                                            {{-- Контейнер для сортируемых изображений --}}
+                                            <div id="sortable-images" class="sortable-wrapper d-flex gap-2 overflow-auto">
+                                                @foreach($product->product_images as $img)
+                                                    <div class="sortable-item" data-id="{{ $img->id }}" style="position: relative;">
+                                                        <a target="_blank"
+                                                           href="{{ url('front/images/products/' . $img->image) }}">
+                                                            <img src="{{ asset('front/images/products/' . $img->image) }}"
+                                                                 style="width: 50px" alt="">
+                                                        </a>
+                                                        <a href="javascript:void(0)" class="confirmDelete"
+                                                           data-module="product-image" data-id="{{ $img->id }}"
+                                                           data-image="{{ $img->image }}">
+                                                            <i class="fas fa-trash"
+                                                               style="position: absolute; top: 0; right: 0; color: red;"></i>
+                                                        </a>
+                                                    </div>
+                                                @endforeach
+                                            </div>
                                         @endif
 
                                         <!-- Hidden input to collect alternate images -->

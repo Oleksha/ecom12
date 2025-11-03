@@ -15,7 +15,7 @@ class Product extends Model
 
     public function product_images(): HasMany
     {
-        return $this->hasMany(ProductsImage::class);
+        return $this->hasMany(ProductsImage::class)->orderBy('sort');
     }
 
     public function attributes(): HasMany
