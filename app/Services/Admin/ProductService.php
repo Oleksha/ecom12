@@ -320,4 +320,18 @@ class ProductService
 
         return 'Product image has been deleted successfully!';
     }
+
+    public function updateAttributeStatus(array $data): int
+    {
+        $status =($data['status'] == "Active") ? 0 : 1;
+        ProductsAttribute::where('id', $data['attribute_id'])->update(['status' => $status]);
+        return $status;
+    }
+
+    public function deleteProductAttribute(string $id): string
+    {
+        // Delete Attribute
+        ProductsAttribute::where('id', $id)->delete();
+        return 'Product Attribute has been deleted successfully!';
+    }
 }

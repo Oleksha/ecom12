@@ -145,9 +145,24 @@ class ProductController extends Controller
 
     public function deleteTempImage(Request $request)
     {
-        $image_path = public_path('front/images/products/' . $request->filename);
+        $image_path = public_path('front/images/products/'.$request->filename);
         if (file_exists($image_path)) {
             unlink($image_path);
         }
+    }
+
+    public function updateAttributeStatus(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = $request->all();
+            $status = $this->productService->updateAttributeStatus($data);
+            return response()->json(['status' => $status, 'attribute_id' => $data['attribute_id']]);
+        }
+    }
+
+    public function deleteProductAttribute(string $id)
+    {
+        $message = $this->productService->deleteProductAttribute($id);
+        return redirect()->back()->with('success_message', $message);
     }
 }
