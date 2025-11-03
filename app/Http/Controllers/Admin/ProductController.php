@@ -66,7 +66,7 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $title = "Edit Product";
-        $product = Product::with('product_images')->findOrFail($id);
+        $product = Product::with(['product_images', 'attributes'])->findOrFail($id);
         $getCategories = Category::getCategories('Admin');
         return view('admin.products.add_edit_product', compact('title', 'product', 'getCategories'));
     }

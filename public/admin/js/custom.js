@@ -1,4 +1,25 @@
 $(document).ready(function(){
+
+    // Add/Remove Attribute Script
+    const maxField = 10; //Input fields increment limitation
+    const wrapper = $('.field_wrapper'); //Input field wrapper
+    const addButton = '.add_button'; //Add button selector
+    const removeTmpl = '<a href="javascript:void(0);" class="btn btn-sm btn-danger remove_button" title="Remove row"><i class="fas fa-minus"></i></a>'; //New input field html
+
+    $(document).on('click', addButton, function(e){
+        e.preventDefault();
+        if (wrapper.find('.attribute-row').length > maxField) return;
+        const row = $(this).closest('.attribute-row').clone();
+        row.find('input').val(''); // Clear values
+        row.find(addButton).replaceWith(removeTmpl);
+        wrapper.append(row);
+    });
+
+    wrapper.on('click', '.remove_button', function(e){
+        e.preventDefault();
+        $(this).closest('.attribute-row').remove(); //Remove field html
+    });
+
     // Check Admin Password is correct or not
     $("#current_pwd").keyup(function () {
         let current_pwd = $("#current_pwd").val();
