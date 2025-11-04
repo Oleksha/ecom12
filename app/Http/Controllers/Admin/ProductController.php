@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductRequest;
 use App\Models\Category;
+use App\Models\ColumnPreference;
 use App\Models\Product;
 use App\Services\Admin\ProductService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
@@ -27,9 +29,13 @@ class ProductController extends Controller
         if ($result['status'] == 'error') {
             return redirect('admin/dashboard')->with('error_message', $result['message']);
         }
+        $productsSavedOrder = ColumnPreference::where('admin_id', Auth::guard('admin')->id())
+            ->where('table_name', 'products')
+            ->value('column_order');
         return view('admin.products.index', [
             'products' => $result['products'],
-            'productsModule' => $result['productsModule']
+            'productsModule' => $result['productsModule'],
+            'productsSavedOrder' => $productsSavedOrder,
         ]);
     }
 

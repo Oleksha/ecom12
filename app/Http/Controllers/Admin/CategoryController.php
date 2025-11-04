@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CategoryRequest;
 use App\Models\Category;
+use App\Models\ColumnPreference;
 use App\Services\Admin\CategoryService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
@@ -26,9 +28,13 @@ class CategoryController extends Controller
         if ($result['status'] == 'error') {
             return redirect('admin/dashboard')->with('error_message', $result['message']);
         }
+        $categoriesSavedOrder = ColumnPreference::where('admin_id', Auth::guard('admin')->id())
+            ->where('table_name', 'categories')
+            ->value('column_order');
         return view('admin.categories.index', [
             'categories' => $result['categories'],
             'categoriesModule' => $result['categoriesModule'],
+            'categoriesSavedOrder' => $categoriesSavedOrder,
         ]);
     }
 

@@ -4,8 +4,8 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
-use Intervention\Image\Drivers\Gd\Driver;
-use Intervention\Image\ImageManager;
+use Intervention\Image\Format;
+use Intervention\Image\Laravel\Facades\Image;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,14 +22,8 @@ Route::get('product-image/{size}/{filename}', function ($size, $filename) {
     if (!file_exists($path)) {
         abort(404, 'Image not found.');
     }
-    $manager = new ImageManager(new Driver());
-    $image = $manager->read($path)
-        ->resize($width, $height, function ($constraint) {
-            $constraint->aspectRatio();
-            $constraint->upsize();
-        });
-    $binary = $image->toJpeg(85); // Сжатие с качеством 85%.
-    return response()->make($binary)->header('Content-Type', 'image/jpeg');
+    $image = Image::read($path)->scale($width, $height);
+    return response()->image($image, Format::JPEG, 85);
 });
 
 Route::prefix('admin')->group(function () {
@@ -57,6 +51,7 @@ Route::prefix('admin')->group(function () {
             ->name('admin.update-details.request');
         // Delete Profile Image
         Route::post('delete-profile-image', [AdminController::class, 'deleteProfileImage']);
+        Route::post('save-column-order', [AdminController::class, 'saveColumnOrder']);
 
         // Sub-Admins
         Route::get('subadmins', [AdminController::class, 'subadmins']);
@@ -90,6 +85,9 @@ Route::prefix('admin')->group(function () {
         // Attribute Product
         Route::post('update-attribute-status', [ProductController::class, 'updateAttributeStatus']);
         Route::get('delete-product-attribute/{id}', [ProductController::class, 'deleteProductAttribute']);
+
+        // Save Column Orders
+        Route::post('save-column-order', [AdminController::class, 'saveColumnOrder']);
 
         // Admin Logout
         Route::get('logout', [AdminController::class, 'destroy'])->name('admin.logout');

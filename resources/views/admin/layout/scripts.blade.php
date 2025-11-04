@@ -231,13 +231,70 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js"></script>
 <!-- Custom Script -->
 <script src="{{ asset('admin/js/custom.js') }}"></script>
-<!-- Datatable -->
-<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<!-- Datatable CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<!-- ColReorder CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.6.2/css/colReorder.dataTables.min.css">
+<!-- Datatable JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<!-- ColReorder JS -->
+<script src="https://cdn.datatables.net/colreorder/1.6.2/js/dataTables.colReorder.min.js"></script>
 <script>
-    $(document).ready(function(){
-        $("#products").DataTable();
-        $("#categories").DataTable();
+    $(document).ready(function() {
         $("#subadmins").DataTable();
+
+        // Безопасно внедряем PHP данные в JS.
+        let categoriesSavedOrder = {!! $categoriesSavedOrder ?? 'null' !!};
+        let productsSavedOrder = {!! $productsSavedOrder ?? 'null' !!};
+
+        // Инициализация Categories DataTable
+        let categoriesTable = $("#categories").DataTable({
+            order: [[0, 'desc']],
+            colReorder: {
+                order: categoriesSavedOrder
+            },
+            stateSave: false
+        });
+        // Управление изменением порядка столбцов для Categories
+        categoriesTable.on('column-reorder', function () {
+            let columnOrder = categoriesTable.colReorder.order();
+            $.ajax({
+                url: "{{ url('admin/save-column-order') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    table_key: 'categories',
+                    column_order: columnOrder
+                },
+                success: function (response) {
+                    console.log('Порядок столбцов категорий сохранен: ', response);
+                }
+            });
+        });
+        // Инициализация Products DataTable
+        let productsTable = $("#products").DataTable({
+            order: [[0, 'desc']],
+            colReorder: {
+                order: productsSavedOrder
+            },
+            stateSave: false
+        });
+        // Управление изменением порядка столбцов для Products
+        productsTable.on('column-reorder', function () {
+            let columnOrder = productsTable.colReorder.order();
+            $.ajax({
+                url: "{{ url('admin/save-column-order') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    table_key: 'products',
+                    column_order: columnOrder
+                },
+                success: function (response) {
+                    console.log('Порядок столбцов продуктов сохранен: ', response);
+                }
+            });
+        });
     });
 </script>
 <!-- SweetAlert2 -->

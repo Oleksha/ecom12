@@ -9,6 +9,7 @@ use App\Http\Requests\Admin\PasswordRequest;
 use App\Http\Requests\Admin\SubadminRequest;
 use App\Models\Admin;
 use App\Models\AdminsRole;
+use App\Models\ColumnPreference;
 use App\Services\Admin\AdminService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,8 +19,8 @@ class AdminController extends Controller
 {
     public function __construct(
         protected AdminService $adminService
-    )
-    {}
+    ) {
+    }
 
     /**
      * Display a listing of the resource.
@@ -48,9 +49,9 @@ class AdminController extends Controller
         if ($loginStatus == 'success') {
             return redirect()->route('dashboard.index');
         } elseif ($loginStatus == 'inactive') {
-            return redirect()->back()->with('error_message', 'Your account is inactive, please contact the administrator');
-        }
-        else {
+            return redirect()->back()->with('error_message',
+                'Your account is inactive, please contact the administrator');
+        } else {
             return redirect()->back()->with('error_message', 'Invalid Email or Password');
         }
     }
@@ -174,7 +175,7 @@ class AdminController extends Controller
         $subadminRoles = AdminsRole::where('subadmin_id', $id)->get()->toArray();
         $subadminDetails = Admin::where('id', $id)->first()->toArray();
         $modules = ['categories', 'products', 'orders', 'users', 'cms_pages']; // Dynamic Modules
-        $title = "Manage Subadmin (" . $subadminDetails['name'] . ") Roles/Permissions";
+        $title = "Manage Subadmin (".$subadminDetails['name'].") Roles/Permissions";
         return view('admin.subadmins.update_roles')->with(compact('modules', 'subadminRoles', 'id', 'title'));
     }
 
@@ -184,5 +185,19 @@ class AdminController extends Controller
             $result = $this->adminService->updateRole($request);
             return redirect()->back()->with('success_message', $result['message']);
         }
+    }
+
+    public function saveColumnOrder(Request $request)
+    {
+        $userId = Auth::guard('admin')->id();
+        $tableName = $request->table_key;
+        if (!$tableName) {
+            return response()->json(['status' => 'error', 'message' => 'Table key is required'], 400);
+        }
+        ColumnPreference::updateOrCreate(
+            ['admin_id' => $userId, 'table_name' => $tableName],
+            ['column_order' => json_encode($request->column_order)]
+        );
+        return response()->json(['status' => 'success']);
     }
 }
