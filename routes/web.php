@@ -4,9 +4,32 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('product-image/{size}/{filename}', function ($size, $filename) {
+    $sizes = config('image_sizes.product');
+    if (!isset($sizes[$size])) {
+        abort(404, 'Invalid size.');
+    }
+    $width = $sizes[$size]['width'];
+    $height = $sizes[$size]['height'];
+    $path = public_path('front/images/products/' . $filename);
+    if (!file_exists($path)) {
+        abort(404, 'Image not found.');
+    }
+    $manager = new ImageManager(new Driver());
+    $image = $manager->read($path)
+        ->resize($width, $height, function ($constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        });
+    $binary = $image->toJpeg(85); // Сжатие с качеством 85%.
+    return response()->make($binary)->header('Content-Type', 'image/jpeg');
 });
 
 Route::prefix('admin')->group(function () {

@@ -227,15 +227,16 @@
                                             </div>
                                         </div>
                                     @endif
+
                                     <div class="mb-3">
                                         <label for="product_video_dropzone" class="form-label">Product Main Image (Max 500 KB)</label>
                                         <div id="mainImageDropzoneError" style="color: red; display: none;"></div>
                                         <div class="dropzone" id="mainImageDropzone"></div>
-
+                                        {{-- Product Main Image --}}
                                         @if(!empty($product['main_image']))
-                                            <a target="_blank" href="{{ url('front/images/products/' . $product['main_image']) }}"><img style="width: 50px; margin: 10px" src="{{ asset('/front/images/products/' . $product['main_image']) }}" alt="{{ $product['product_name'] }}"></a>
+                                            <a target="_blank" href="{{ url('front/images/products/' . $product['main_image']) }}"><img style="margin: 10px" src="{{ asset('product-image/thumbnail/' . $product['main_image']) }}" alt="{{ $product['product_name'] }}"></a>
                                             <a style="color: #3f6ed3" class="confirmDelete"
-                                               title="DeleteProduct Image" href="javascript:void(0)"
+                                               title="Delete Product Image" href="javascript:void(0)"
                                                data-module="product-main-image" data-id="{{ $product['id'] }}"><i class="fas fa-trash"></i></a>
                                         @endif
 
@@ -247,7 +248,6 @@
                                             Alternate Product Images (Multiple Uploads Allowed, Max 500 KB each)
                                         </label>
                                         <div class="dropzone" id="productImagesDropzone"></div>
-
                                         @if(isset($product->product_images) && $product->product_images->count() > 0)
                                             @if($product->product_images->count() > 1)
                                                 {{-- Instruction Line --}}
@@ -257,12 +257,12 @@
                                             @endif
                                             {{-- Контейнер для сортируемых изображений --}}
                                             <div id="sortable-images" class="sortable-wrapper d-flex gap-2 overflow-auto">
+                                                {{-- Product Alternate Images --}}
                                                 @foreach($product->product_images as $img)
                                                     <div class="sortable-item" data-id="{{ $img->id }}" style="position: relative;">
                                                         <a target="_blank"
                                                            href="{{ url('front/images/products/' . $img->image) }}">
-                                                            <img src="{{ asset('front/images/products/' . $img->image) }}"
-                                                                 style="width: 50px" alt="">
+                                                            <img src="{{ asset('product-image/thumbnail/' . $img->image) }}" alt="">
                                                         </a>
                                                         <a href="javascript:void(0)" class="confirmDelete"
                                                            data-module="product-image" data-id="{{ $img->id }}"
