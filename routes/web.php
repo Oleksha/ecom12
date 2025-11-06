@@ -27,12 +27,12 @@ Route::get('product-image/{size}/{filename}', function ($size, $filename) {
 });
 
 Route::prefix('admin')->group(function () {
-    // Show login form
+    // Показать форму входа
     Route::get('login', [AdminController::class, 'create'])->name('admin.login');
     // Handle login form submission
     Route::post('login', [AdminController::class, 'store'])->name('admin.login.request');
     Route::group(['middleware' => ['admin']], function () {
-        // Dashboard route
+        // Панель управления
         Route::resource('dashboard', AdminController::class)->only(['index']);
         // Display Update Password Page
         Route::get('update-password', [AdminController::class, 'edit'])
