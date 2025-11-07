@@ -29,14 +29,23 @@ class ProductController extends Controller
         if ($result['status'] == 'error') {
             return redirect('admin/dashboard')->with('error_message', $result['message']);
         }
-        $productsSavedOrder = ColumnPreference::where('admin_id', Auth::guard('admin')->id())
+
+        $products = $result['products'];
+        $productsModule = $result['productsModule'];
+
+        $columnPrefs = ColumnPreference::where('admin_id', Auth::guard('admin')->id())
             ->where('table_name', 'products')
-            ->value('column_order');
-        return view('admin.products.index', [
-            'products' => $result['products'],
-            'productsModule' => $result['productsModule'],
-            'productsSavedOrder' => $productsSavedOrder,
-        ]);
+            ->first();
+
+        $productsSavedOrder = $columnPrefs ? json_decode($columnPrefs->column_order, true) : null;
+        $productsHiddenCols = $columnPrefs ? json_decode($columnPrefs->hidden_columns, true) : [];
+
+        return view('admin.products.index')
+            ->with(compact(
+                'products',
+                'productsModule',
+                'productsSavedOrder',
+                'productsHiddenCols'));
     }
 
     /**

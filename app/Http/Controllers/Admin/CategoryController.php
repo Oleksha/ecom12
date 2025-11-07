@@ -28,14 +28,22 @@ class CategoryController extends Controller
         if ($result['status'] == 'error') {
             return redirect('admin/dashboard')->with('error_message', $result['message']);
         }
-        $categoriesSavedOrder = ColumnPreference::where('admin_id', Auth::guard('admin')->id())
+        $categories = $result['categories'];
+        $categoriesModule = $result['categoriesModule'];
+
+        $columnPrefs = ColumnPreference::where('admin_id', Auth::guard('admin')->id())
             ->where('table_name', 'categories')
-            ->value('column_order');
-        return view('admin.categories.index', [
-            'categories' => $result['categories'],
-            'categoriesModule' => $result['categoriesModule'],
-            'categoriesSavedOrder' => $categoriesSavedOrder,
-        ]);
+            ->first();
+
+        $categoriesSavedOrder = $columnPrefs ? json_decode($columnPrefs->column_order, true) : null;
+        $categoriesHiddenCols = $columnPrefs ? json_decode($columnPrefs->hidden_columns, true) : [];
+
+        return view('admin.categories.index')
+            ->with(compact(
+                'categories',
+                'categoriesModule',
+                'categoriesSavedOrder',
+                'categoriesHiddenCols'));
     }
 
     /**

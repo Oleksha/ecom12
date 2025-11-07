@@ -200,4 +200,21 @@ class AdminController extends Controller
         );
         return response()->json(['status' => 'success']);
     }
+
+    public function saveColumnVisibility(Request $request)
+    {
+        $userId = Auth::guard('admin')->id();
+        $tableName = $request->table_key;
+        if (!$tableName) {
+            return response()->json(['status' => 'error', 'message' => 'Table key is required'], 400);
+        }
+        ColumnPreference::updateOrCreate(
+            ['admin_id' => $userId, 'table_name' => $tableName],
+            [
+                'column_order' => json_encode($request->column_order),
+                'hidden_columns' => json_encode($request->hidden_columns)
+            ]
+        );
+        return response()->json(['status' => 'success']);
+    }
 }

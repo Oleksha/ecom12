@@ -88,6 +88,8 @@ Route::prefix('admin')->group(function () {
 
         // Save Column Orders
         Route::post('save-column-order', [AdminController::class, 'saveColumnOrder']);
+        // Save Column Visibility
+        Route::post('save-column-visibility', [AdminController::class, 'saveColumnVisibility']);
 
         // Admin Logout
         Route::get('logout', [AdminController::class, 'destroy'])->name('admin.logout');

@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('admin_id');
             $table->string('table_name');
-            $table->text('column_order'); // в формате JSON
+            $table->text('column_order')->nullable(); // в формате JSON
+            $table->text('hidden_columns')->nullable(); // в формате JSON
             $table->timestamps();
         });
     }
