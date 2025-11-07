@@ -88,6 +88,12 @@
                                 <p>Products</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('brands.index') }}" class="nav-link {{ (Session::get('page') == 'brands') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Бренды</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item">

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -90,6 +91,10 @@ Route::prefix('admin')->group(function () {
         Route::post('save-column-order', [AdminController::class, 'saveColumnOrder']);
         // Save Column Visibility
         Route::post('save-column-visibility', [AdminController::class, 'saveColumnVisibility']);
+
+        // Бренды
+        Route::resource('brands', BrandController::class);
+        Route::post('update-brand-status', [BrandController::class, 'updateBrandStatus']);
 
         // Admin Logout
         Route::get('logout', [AdminController::class, 'destroy'])->name('admin.logout');
