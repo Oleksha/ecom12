@@ -26,7 +26,7 @@ class BrandRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'url' => 'required|regex:^[\pL\s\-]+$/u',
+            'url' => 'required|regex:/^[\pL\s\-]+$/u',
         ];
     }
 

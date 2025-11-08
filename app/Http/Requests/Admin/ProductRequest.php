@@ -23,6 +23,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'category_id' => 'required',
+            'brand_id' => 'required',
             'product_name' => 'required|max:200',
             'product_code' => 'required|max:30',
             'product_price' => 'required|numeric|gt:0',
@@ -34,13 +35,14 @@ class ProductRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'category_id.required' => 'Category is required.',
-            'product_name.required' => 'Product name is required.',
-            'product_code.required' => 'Product code is required.',
-            'product_price.required' => 'Product price is required.',
-            'product_price.numeric' => 'Valid Product price is required.',
-            'product_color.required' => 'Product color is required.',
-            'family_color.required' => 'Product family is required.',
+            'category_id.required' => 'Обязательно укажите название категории.',
+            'brand_id.required' => 'Обязательно укажите название бренда.',
+            'product_name.required' => 'Обязательно укажите название продукта.',
+            'product_code.required' => 'Обязательно укажите код продукта.',
+            'product_price.required' => 'Обязательно укажите цену продукта.',
+            'product_price.numeric' => 'Цена продукта должна быть корректной.',
+            'product_color.required' => 'Обязательно укажите цвет продукта.',
+            'family_color.required' => 'Обязательно укажите семейство цветов продукта.',
         ];
     }
 }

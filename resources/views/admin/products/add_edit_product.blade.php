@@ -81,9 +81,20 @@
                                         </select>
                                     </div>
                                     <div class="mb-3">
+                                        <label class="form-label" for="brand_id">Бренд*</label>
+                                        <select name="brand_id" id="brand_id" class="form-select">
+                                            <option value="">Выберите</option>
+                                            @foreach($brands as $brand)
+                                                <option value="{{ $brand['id'] }}" {{ old('brand_id', $product->brand_id ?? '') == $brand['id'] ? 'selected' : '' }}>
+                                                    {{ $brand['name'] }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="product_name" class="form-label">Имя продукта*</label>
                                         <input type="text" class="form-control" id="product_name"
-                                               name="product_name" placeholder="Введите имя категории"
+                                               name="product_name" placeholder="Введите имя продукта"
                                                value="{{ old('product_name', $product->product_name ?? '') }}">
                                     </div>
                                     <div class="mb-3">

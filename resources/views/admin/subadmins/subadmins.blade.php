@@ -39,7 +39,7 @@
                             <!-- /.card-header -->
                             <div class="card-body">
                                 @if(Session::has('success_message'))
-                                    <div class="alert alert-success alert-dismissible fade show m-3">
+                                    <div class="alert alert-success alert-dismissible fade show mb-3">
                                         <strong>Success: </strong> {{ Session::get('success_message') }}
                                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                     </div>

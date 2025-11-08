@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductRequest;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ColumnPreference;
 use App\Models\Product;
@@ -53,9 +54,11 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $title = "Add Product";
+        $title = "Добавить продукт";
         $getCategories = Category::getCategories('Admin');
-        return view('admin.products.add_edit_product', compact('title', 'getCategories'));
+        // Получить все активные бренды
+        $brands = Brand::where('status', 1)->get()->toArray();
+        return view('admin.products.add_edit_product', compact('title', 'getCategories', 'brands'));
     }
 
     /**
@@ -80,10 +83,12 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $title = "Edit Product";
+        $title = "Изменение продукта";
         $product = Product::with(['product_images', 'attributes'])->findOrFail($id);
         $getCategories = Category::getCategories('Admin');
-        return view('admin.products.add_edit_product', compact('title', 'product', 'getCategories'));
+        // Получить все активные бренды
+        $brands = Brand::where('status', 1)->get()->toArray();
+        return view('admin.products.add_edit_product', compact('title', 'product', 'getCategories', 'brands'));
     }
 
     /**
