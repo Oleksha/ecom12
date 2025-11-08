@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\BrandRequest;
 use App\Models\Brand;
 use App\Services\Admin\BrandService;
 use Illuminate\Http\Request;
@@ -43,7 +44,7 @@ class BrandController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(BrandRequest $request)
     {
         $messages = $this->brandService->addEditBrand($request);
         return redirect()->route('brands.index')->with('success_message', $messages);
@@ -70,7 +71,7 @@ class BrandController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(BrandRequest $request, string $id)
     {
         $request->merge(['id' => $id]);
         $message = $this->brandService->addEditBrand($request);

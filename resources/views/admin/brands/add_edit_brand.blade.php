@@ -93,7 +93,7 @@
                                                value="{{ old('brand_discount', $brand->discount ?? '') }}">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="url" class="form-label">URL бренда</label>
+                                        <label for="url" class="form-label">URL бренда*</label>
                                         <input type="text" class="form-control" placeholder="Введите URL бренда"
                                                id="url" name="url"
                                                value="{{ old('url', $brand->url ?? '') }}">
