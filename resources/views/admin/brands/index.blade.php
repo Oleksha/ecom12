@@ -82,9 +82,9 @@
                                                             @method('DELETE')
                                                             <button class="confirmDelete"
                                                                     name="Brand"
-                                                                    title="DeleteCategory"
+                                                                    title="DeleteBrand"
                                                                     type="button"
-                                                                    data-module="brands"
+                                                                    data-module="brand"
                                                                     data-id="{{ $brand->id }}"
                                                                     style="border: none; background: none; color: #3f6ed3">
                                                                 <i class="fas fa-trash"></i>
