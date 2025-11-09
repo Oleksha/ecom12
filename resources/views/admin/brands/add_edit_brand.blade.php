@@ -34,19 +34,19 @@
                             <div class="card-header"><div class="card-title">{{ $title }}</div></div>
                             <!--end::Header-->
                             @if(Session::has('error_message'))
-                                <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+                                <div class="alert alert-danger alert-dismissible fade show m-3" role="alert">
                                     <strong>Ошибка: </strong> {{ Session::get('error_message') }}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             @endif
                             @if(Session::has('success_message'))
-                                <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+                                <div class="alert alert-success alert-dismissible fade show m-3" role="alert">
                                     <strong>Успешно: </strong> {{ Session::get('success_message') }}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             @endif
                             @foreach($errors->all() as $error)
-                                <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+                                <div class="alert alert-danger alert-dismissible fade show m-3" role="alert">
                                     <strong>Ошибка! </strong> {!! $error !!}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
