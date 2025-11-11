@@ -4,12 +4,13 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Front\IndexController;
 use Illuminate\Support\Facades\Route;
 use Intervention\Image\Format;
 use Intervention\Image\Laravel\Facades\Image;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::namespace('App\Http\Controllers\Front')->group(function () {
+    Route::get('/', [IndexController::class, 'index']);
 });
 
 Route::get('product-image/{size}/{filename}', function ($size, $filename) {

@@ -1,0 +1,32 @@
+Stack Developers Laravel 12 E-commerce Template License
+=======================================================
+
+Copyright (c) 2025 Stack Developers
+YouTube: https://youtube.com/StackDevelopers
+
+This Laravel 12 E-commerce template is provided free of charge for educational and learning purposes only.
+
+Permissions:
+------------
+✔ You may:
+- Download, modify, and use this template for personal learning.
+- Use the code to practice Laravel development, understand structure, and improve your skills.
+- Share the unmodified template by linking back to the official source or YouTube channel.
+
+Restrictions:
+-------------
+✘ You may NOT:
+- Use this template or any part of it for commercial purposes.
+- Sell, resell, or distribute this template or its modified versions as part of any paid project, product, or service.
+- Remove attribution to "Stack Developers" or claim ownership of this template.
+
+Disclaimer:
+-----------
+This template is provided "as is" without any warranty. Use it at your own risk.
+
+If you'd like to use this template for commercial projects, please contact Stack Developers for proper licensing or collaboration.
+
+Learn more and support the project:
+📺 YouTube Channel: https://youtube.com/StackDevelopers
+
+Happy Coding!
