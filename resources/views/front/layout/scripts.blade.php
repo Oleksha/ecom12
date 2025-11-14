@@ -13,3 +13,14 @@
 
 <!-- Template Javascript -->
 <script src="{{ asset('front/js/main.js') }}"></script>
+
+<script>
+    // Initialize submenu functionality
+    $(document).ready(function () {
+        $('.dropdown-submenu a.test').on('click', function (e) {
+            $(this).next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();
+        });
+    });
+</script>

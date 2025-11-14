@@ -10,3 +10,28 @@
 
 <!-- Customized Bootstrap Stylesheet -->
 <link href="{{ asset('front/css/style.css') }}" rel="stylesheet">
+
+<style>
+    .dropdown-submenu {
+        position: relative;
+    }
+    .dropdown-submenu .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -9px;
+        display: none;
+    }
+    .dropdown-submenu:hover .dropdown-menu {
+        display: block;
+    }
+    .dropdown-submenu .dropdown-item {
+        display: block;
+        top: -10px;
+    }
+    .navbar-expand-lg .navbar-nav .nav-link-right {
+        padding: 3px 10px;
+    }
+    .navbar-light .navbar-nav .nav-link-right:hover, .navbar-light .navbar-nav .nav-link-right.active {
+        color: #D19C97;
+    }
+</style>
