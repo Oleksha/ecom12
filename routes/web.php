@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
@@ -96,6 +97,10 @@ Route::prefix('admin')->group(function () {
         // Бренды
         Route::resource('brands', BrandController::class);
         Route::post('update-brand-status', [BrandController::class, 'updateBrandStatus']);
+
+        // Баннеры
+        Route::resource('banners', BannerController::class);
+        Route::post('update-banner-status', [BannerController::class, 'updateBannerStatus']);
 
         // Admin Logout
         Route::get('logout', [AdminController::class, 'destroy'])->name('admin.logout');
