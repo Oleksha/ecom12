@@ -94,6 +94,23 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item {{ in_array(Session::get('page'), ['banners']) ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ in_array(Session::get('page'), ['banners']) ? 'active' : '' }}">
+                        <i class="nav-icon bi bi-clipboard-fill"></i>
+                        <p>
+                            Баннеры
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('banners.index') }}" class="nav-link {{ (Session::get('page') == 'banners') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Баннеры</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
             <!--end::Sidebar Menu-->
         </nav>

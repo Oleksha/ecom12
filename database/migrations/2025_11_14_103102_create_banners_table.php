@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('image');
             $table->string('type');
-            $table->string('link');
+            $table->string('link')->nullable();
             $table->string('title');
-            $table->string('alt');
-            $table->integer('sort');
-            $table->tinyInteger('status');
+            $table->string('alt')->nullable();
+            $table->integer('sort')->nullable();
+            $table->tinyInteger('status')->nullable();
             $table->timestamps();
         });
     }

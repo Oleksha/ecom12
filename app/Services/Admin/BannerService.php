@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Admin;
 
 use App\Models\AdminsRole;
 use App\Models\Banner;
@@ -73,5 +73,48 @@ class BannerService
         $banner->delete();
 
         return ['status' => 'success', 'message' => 'Banner deleted successfully!'];
+    }
+
+    public function addEditBanner($request)
+    {
+        $data = $request->all();
+        $banner = isset($data['id']) ? Banner::find($data['id']) : new Banner();
+        $banner->type = $data['type'];
+        $banner->link = $data['link'];
+        $banner->title = $data['title'];
+        $banner->alt = $data['alt'];
+        $banner->sort = $data['sort'] ?? 0;
+        $banner->status = $data['status'] ?? 1;
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            /*$image_tmp = $request->file('image');
+            if ($image_tmp->isValid()) {
+                $manager = new ImageManager(new Driver());
+                $image = $manager->read($image_tmp);
+                $extension = $image_tmp->getClientOriginalExtension();
+                $imageName = rand(111, 9999) . '.' . $extension;
+                $imagePath = 'front/images/brands/' . $imageName;
+                $image->save($imagePath);
+                $brand->image = $imageName;
+            }*/
+            $path = 'front/images/banners/';
+            if (!File::exists(public_path($path))) {
+                File::makeDirectory(public_path($path), $mode = 0755, true);
+            }
+
+            // Delete old image if editing
+            if (!empty($banner->image) && File::exists(public_path($path . $banner->image))) {
+                File::delete(public_path($path . $banner->image));
+            }
+
+            $image = $request->file('image');
+            $imageName = time() . '-' . $image->getClientOriginalName();
+            $image->move(public_path($path), $imageName);
+            $banner->image = $imageName;
+        }
+
+        $banner->save();
+        return isset($data['id']) ? 'Баннер успешно обновлен!' : 'Баннер успешно добавлен!';
     }
 }

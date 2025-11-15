@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\BannerRequest;
+use App\Models\Banner;
 use App\Models\ColumnPreference;
-use App\Services\BannerService;
+use App\Services\Admin\BannerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -49,15 +51,17 @@ class BannerController extends Controller
      */
     public function create()
     {
-        //
+        $title = 'Добавление баннера';
+        return view('admin.banners.add_edit_banner', compact('title'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(BannerRequest $request)
     {
-        //
+        $message = $this->bannerService->addEditBanner($request);
+        return redirect()->route('banners.index')->with('success_message', $message);
     }
 
     /**
@@ -73,15 +77,19 @@ class BannerController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $title = 'Изменение баннера';
+        $banner = Banner::findOrFail($id);
+        return view('admin.banners.add_edit_banner', compact('title', 'banner'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(BannerRequest $request, string $id)
     {
-        //
+        $request->merge(['id' => $id]);
+        $message = $this->bannerService->addEditBanner($request);
+        return redirect()->route('banners.index')->with('success_message', $message);
     }
 
     /**
