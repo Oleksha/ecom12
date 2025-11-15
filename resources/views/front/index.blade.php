@@ -3,26 +3,28 @@
     <!-- Carousel Start -->
     <div id="header-carousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
-            <div class="carousel-item active" style="height: 610px;">
-                <a href="#"><img class="img-fluid" src="{{ asset('front/images/carousel-1.jpg') }}" alt="Image"></a>
-            </div>
-            <div class="carousel-item" style="height: 610px;">
-                <a href="#"><img class="img-fluid" src="{{ asset('front/images/carousel-2.jpg') }}" alt="Image"></a>
-            </div>
-            <div class="carousel-item" style="height: 610px;">
-                <a href="#"><img class="img-fluid" src="{{ asset('front/images/carousel-3.jpg') }}" alt="Image"></a>
-            </div>
+            @foreach($homeSliderBanners as $key => $sliderBanner)
+                <div class="carousel-item @if($key == 0) active @endif" style="height: 610px;">
+                    <a href="{{ $sliderBanner['link'] }}" title="{{ $sliderBanner['title'] }}">
+                        <img class="img-fluid"
+                             src="{{ asset('front/images/banners/' . $sliderBanner['image']) }}"
+                             alt="{{ $sliderBanner['alt'] }}" title="{{ $sliderBanner['title'] }}">
+                    </a>
+                </div>
+            @endforeach
         </div>
-        <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
-            <div class="btn btn-dark" style="width: 45px; height: 45px;">
-                <span class="carousel-control-prev-icon mb-n2"></span>
-            </div>
-        </a>
-        <a class="carousel-control-next" href="#header-carousel" data-slide="next">
-            <div class="btn btn-dark" style="width: 45px; height: 45px;">
-                <span class="carousel-control-next-icon mb-n2"></span>
-            </div>
-        </a>
+        @if(count($homeSliderBanners) > 1)
+            <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
+                <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                    <span class="carousel-control-prev-icon mb-n2"></span>
+                </div>
+            </a>
+            <a class="carousel-control-next" href="#header-carousel" data-slide="next">
+                <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                    <span class="carousel-control-next-icon mb-n2"></span>
+                </div>
+            </a>
+        @endif
     </div>
     <!-- Carousel End -->
 
@@ -121,24 +123,18 @@
     <!-- Offer Start -->
     <div class="container-fluid offer pt-2">
         <div class="row px-xl-5">
-            <div class="col-md-6 pb-4">
-                <div class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-5 px-5">
-                    <div class="position-relative" style="z-index: 1;">
-                        <h5 class="text-uppercase text-primary mb-3">20% off the all order</h5>
-                        <h1 class="mb-4 font-weight-semi-bold">Summer Collection</h1>
-                        <a href="" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
+            @foreach($homeFixBanners as $fixBanners)
+                <div class="col-md-6 pb-4">
+                    <div class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-5 px-5"
+                         style="background-image: url('{{ asset('front/images/banners/' . $fixBanners['image']) }}'); background-size: cover;">
+                        <div class="position-relative" style="z-index: 1;">
+                            <h5 class="text-uppercase text-primary mb-3">{{ $fixBanners['alt'] }}</h5>
+                            <h1 class="mb-4 font-weight-semi-bold">{{ $fixBanners['title'] }}</h1>
+                            <a href="{{ $fixBanners['link'] }}" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6 pb-4">
-                <div class="position-relative bg-secondary text-center text-md-left text-white mb-2 py-5 px-5">
-                    <div class="position-relative" style="z-index: 1;">
-                        <h5 class="text-uppercase text-primary mb-3">10% off the all order</h5>
-                        <h1 class="mb-4 font-weight-semi-bold">Winter Collection</h1>
-                        <a href="" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
     <!-- Offer End -->
