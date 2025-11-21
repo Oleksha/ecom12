@@ -16,6 +16,11 @@ class IndexController extends Controller
     public function index()
     {
         $banners = $this->indexService->getHomePageBanners();
-        return view('front.index')->with($banners);
+        $featured = $this->indexService->featuredProducts();
+        $newArrivals = $this->indexService->newArrivalProducts();
+        return view('front.index')
+            ->with($banners)
+            ->with($featured)
+            ->with($newArrivals);
     }
 }

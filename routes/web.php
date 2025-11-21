@@ -25,7 +25,7 @@ Route::get('product-image/{size}/{filename}', function ($size, $filename) {
     if (!file_exists($path)) {
         abort(404, 'Image not found.');
     }
-    $image = Image::read($path)->scale($width, $height);
+    $image = Image::read($path)->resize($width, $height);
     return response()->image($image, Format::JPEG, 85);
 });
 

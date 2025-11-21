@@ -334,10 +334,15 @@
                                                value="{{ old('meta_keywords', $product->meta_keywords ?? '') }}">
                                     </div>
                                     <div class="mb-3">
+                                        <label for="sort" class="form-label">Сортировка</label>
+                                        <input type="number" class="form-control" id="sort" name="sort"
+                                               value="{{ old('sort', $product->sort ?? '') }}">
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="is_featured" class="form-label">Is Featured?</label>
                                         <select name="is_featured" id="is_featured" class="form-select">
-                                            <option value="No" {{ (old('is_featured' , $product->is_featured ?? '') == 'No') ? 'selected' : '' }}></option>
-                                            <option value="Yes" {{ (old('is_featured' , $product->is_featured ?? '') == 'Yes') ? 'selected' : '' }}></option>
+                                            <option value="No" {{ (old('is_featured' , $product->is_featured ?? '') == 'No') ? 'selected' : '' }}>No</option>
+                                            <option value="Yes" {{ (old('is_featured' , $product->is_featured ?? '') == 'Yes') ? 'selected' : '' }}>Yes</option>
                                         </select>
                                     </div>
                                 </div>
