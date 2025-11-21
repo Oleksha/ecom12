@@ -60,123 +60,91 @@
     <!-- Featured End -->
 
     <!-- Categories Start -->
-    <div class="container-fluid pt-2">
-        <div class="row px-xl-5 pb-3">
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">30 Products</p>
-                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="{{ asset('front/images/sitemakers1.png') }}" alt="">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">Men</h5>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">15 Products</p>
-                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="{{ asset('front/images/sitemakers1.png') }}" alt="">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">Women</h5>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">10 Products</p>
-                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="{{ asset('front/images/sitemakers1.png') }}" alt="">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">Kids</h5>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">20 Products</p>
-                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="{{ asset('front/images/sitemakers1.png') }}" alt="">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">Electronics</h5>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">15 Products</p>
-                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="{{ asset('front/images/sitemakers1.png') }}" alt="">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">Appliances</h5>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 pb-1">
-                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
-                    <p class="text-right">15 Products</p>
-                    <a href="" class="cat-img position-relative overflow-hidden mb-3">
-                        <img class="img-fluid" src="{{ asset('front/images/sitemakers1.png') }}" alt="">
-                    </a>
-                    <h5 class="font-weight-semi-bold m-0">Accessories</h5>
-                </div>
+    @if(count($categories) > 0)
+        <div class="container-fluid pt-2">
+            <div class="row px-xl-5 pb-3">
+                @foreach($categories as $category)
+                    @php
+                        $image = !empty($category['image'])
+                            ? asset('front/images/categories/' . $category['image'])
+                            : asset('front/images/no-image.png');
+                    @endphp
+                    <div class="col-lg-4 col-md-6 pb-1">
+                        <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                            <p class="text-right">{{ $category['product_count'] }} товаров</p>
+                            <a href="{{ url('category/' . $category['url']) }}" class="cat-img position-relative overflow-hidden mb-3">
+                                <img class="img-fluid" src="{{ $image }}" alt="{{ $category['name'] }}">
+                            </a>
+                            <h5 class="font-weight-semi-bold m-0">{{ $category['name'] }}</h5>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
-    </div>
+    @endif
     <!-- Categories End -->
 
     <!-- Offer Start -->
-    <div class="container-fluid offer pt-2">
-        <div class="row px-xl-5">
-            @foreach($homeFixBanners as $fixBanners)
-                <div class="col-md-6 pb-4">
-                    <div class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-5 px-5"
-                         style="background-image: url('{{ asset('front/images/banners/' . $fixBanners['image']) }}'); background-size: cover;">
-                        <div class="position-relative" style="z-index: 1;">
-                            <h5 class="text-uppercase text-primary mb-3">{{ $fixBanners['alt'] }}</h5>
-                            <h1 class="mb-4 font-weight-semi-bold">{{ $fixBanners['title'] }}</h1>
-                            <a href="{{ $fixBanners['link'] }}" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
+    @if(count($homeFixBanners) > 0)
+        <div class="container-fluid offer pt-2">
+            <div class="row px-xl-5">
+                @foreach($homeFixBanners as $fixBanners)
+                    <div class="col-md-6 pb-4">
+                        <div class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-5 px-5"
+                             style="background-image: url('{{ asset('front/images/banners/' . $fixBanners['image']) }}'); background-size: cover;">
+                            <div class="position-relative" style="z-index: 1;">
+                                <h5 class="text-uppercase text-primary mb-3">{{ $fixBanners['alt'] }}</h5>
+                                <h1 class="mb-4 font-weight-semi-bold">{{ $fixBanners['title'] }}</h1>
+                                <a href="{{ $fixBanners['link'] }}" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
         </div>
-    </div>
+    @endif
     <!-- Offer End -->
 
     <!-- Products Start -->
-    <div class="container-fluid pt-3">
-        <div class="text-center mb-4">
-            <h2 class="section-title px-5"><span class="px-2">Рекомендуемые продукты</span></h2>
-        </div>
-        <div class="row px-xl-5 pb-3">
-            @foreach($featuredProducts as $product)
-                @php
-                    $fallbackImage = asset('front/images/products/no-image.png');
-                    $image = !empty($product['main_image'])
-                        ? asset('product-image/medium/' . $product['main_image'])
-                        : (!empty($product['product_images'][0]['image'])
-                            ? asset('product-image/medium/' . $product['product_images'][0]['image'])
-                            : $fallbackImage);
-                @endphp
-                <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                    <div class="card product-item border-0 mb-4">
-                        <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <a href=""><img class="img-fluid w-100" src="{{ $image }}" alt="{{ $product['product_name'] }}"></a>
-                        </div>
-                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                            <h6 class="text-truncate mb-3">{{ $product['product_name'] }}</h6>
-                            <div class="d-flex justify-content-center">
-                                <h6>{{ $product['final_price'] }}</h6>
-                                @if($product['product_discount'] > 0)
-                                    <h6 class="text-muted ml-2"><del>{{ $product['product_price'] }}</del></h6>
-                                @endif
+    @if(count($featuredProducts) > 0)
+        <div class="container-fluid pt-3">
+            <div class="text-center mb-4">
+                <h2 class="section-title px-5"><span class="px-2">Рекомендуемые продукты</span></h2>
+            </div>
+            <div class="row px-xl-5 pb-3">
+                @foreach($featuredProducts as $product)
+                    @php
+                        $fallbackImage = asset('front/images/products/no-image.png');
+                        $image = !empty($product['main_image'])
+                            ? asset('product-image/medium/' . $product['main_image'])
+                            : (!empty($product['product_images'][0]['image'])
+                                ? asset('product-image/medium/' . $product['product_images'][0]['image'])
+                                : $fallbackImage);
+                    @endphp
+                    <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                        <div class="card product-item border-0 mb-4">
+                            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                <a href=""><img class="img-fluid w-100" src="{{ $image }}" alt="{{ $product['product_name'] }}"></a>
+                            </div>
+                            <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                <h6 class="text-truncate mb-3">{{ $product['product_name'] }}</h6>
+                                <div class="d-flex justify-content-center">
+                                    <h6>{{ $product['final_price'] }}</h6>
+                                    @if($product['product_discount'] > 0)
+                                        <h6 class="text-muted ml-2"><del>{{ $product['product_price'] }}</del></h6>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between bg-light border">
+                                <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Просмотреть детали</a>
+                                <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Добавить в корзину</a>
                             </div>
                         </div>
-                        <div class="card-footer d-flex justify-content-between bg-light border">
-                            <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Просмотреть детали</a>
-                            <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Добавить в корзину</a>
-                        </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
         </div>
-    </div>
+    @endif
     <!-- Products End -->
 
     <!-- Subscribe Start -->
@@ -201,79 +169,64 @@
     <!-- Subscribe End -->
 
     <!-- Products Start -->
-    <div class="container-fluid pt-4">
-        <div class="text-center mb-4">
-            <h2 class="section-title px-5"><span class="px-2">Новое поступление</span></h2>
-        </div>
-        <div class="row px-xl-5 pb-3">
-            @foreach($newArrivalProducts as $product)
-                @php
-                    $fallbackImage = asset('front/images/products/no-image.png');
-                    $image = !empty($product['main_image'])
-                        ? asset('product-image/medium/' . $product['main_image'])
-                        : (!empty($product['product_images'][0]['image'])
-                            ? asset('product-image/medium/' . $product['product_images'][0]['image'])
-                            : $fallbackImage);
-                @endphp
-                <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                    <div class="card product-item border-0 mb-4">
-                        <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <a href="#">
-                                <img class="img-fluid w-100" src="{{ $image }}" alt="{{ $product['product_name'] }}">
-                            </a>
-                        </div>
-                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                            <h6 class="text-truncate mb-3">{{ $product['product_name'] }}</h6>
-                            <div class="d-flex justify-content-center">
-                                <h6>{{ $product['final_price'] }}</h6>
-                                @if($product['product_discount'] > 0)
-                                    <h6 class="text-muted ml-2"><del>{{ $product['product_price'] }}</del></h6>
-                                @endif
+    @if(count($newArrivalProducts) > 0)
+        <div class="container-fluid pt-4">
+            <div class="text-center mb-4">
+                <h2 class="section-title px-5"><span class="px-2">Новое поступление</span></h2>
+            </div>
+            <div class="row px-xl-5 pb-3">
+                @foreach($newArrivalProducts as $product)
+                    @php
+                        $fallbackImage = asset('front/images/products/no-image.png');
+                        $image = !empty($product['main_image'])
+                            ? asset('product-image/medium/' . $product['main_image'])
+                            : (!empty($product['product_images'][0]['image'])
+                                ? asset('product-image/medium/' . $product['product_images'][0]['image'])
+                                : $fallbackImage);
+                    @endphp
+                    <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                        <div class="card product-item border-0 mb-4">
+                            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                <a href="#">
+                                    <img class="img-fluid w-100" src="{{ $image }}" alt="{{ $product['product_name'] }}">
+                                </a>
+                            </div>
+                            <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                <h6 class="text-truncate mb-3">{{ $product['product_name'] }}</h6>
+                                <div class="d-flex justify-content-center">
+                                    <h6>{{ $product['final_price'] }}</h6>
+                                    @if($product['product_discount'] > 0)
+                                        <h6 class="text-muted ml-2"><del>{{ $product['product_price'] }}</del></h6>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between bg-light border">
+                                <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Просмотреть детали</a>
+                                <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Добавить в корзину</a>
                             </div>
                         </div>
-                        <div class="card-footer d-flex justify-content-between bg-light border">
-                            <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Просмотреть детали</a>
-                            <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Добавить в корзину</a>
-                        </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
         </div>
-    </div>
+    @endif
     <!-- Products End -->
 
     <!-- Vendor Start -->
-    <div class="container-fluid py-2">
-        <div class="row px-xl-5">
-            <div class="col">
-                <div class="owl-carousel vendor-carousel">
-                    <div class="vendor-item border p-4">
-                        <img src="{{ asset('front/images/stackdevelopers_logo.png') }}" alt="">
-                    </div>
-                    <div class="vendor-item border p-4">
-                        <img src="{{ asset('front/images/stackdevelopers-logo.png') }}" alt="">
-                    </div>
-                    <div class="vendor-item border p-4">
-                        <img src="{{ asset('front/images/stackdevelopers_logo.png') }}" alt="">
-                    </div>
-                    <div class="vendor-item border p-4">
-                        <img src="{{ asset('front/images/stackdevelopers-logo.png') }}" alt="">
-                    </div>
-                    <div class="vendor-item border p-4">
-                        <img src="{{ asset('front/images/stackdevelopers_logo.png') }}" alt="">
-                    </div>
-                    <div class="vendor-item border p-4">
-                        <img src="{{ asset('front/images/stackdevelopers-logo.png') }}" alt="">
-                    </div>
-                    <div class="vendor-item border p-4">
-                        <img src="{{ asset('front/images/stackdevelopers_logo.png') }}" alt="">
-                    </div>
-                    <div class="vendor-item border p-4">
-                        <img src="{{ asset('front/images/stackdevelopers-logo.png') }}" alt="">
+    @if(count($logoBanners) > 0)
+        <div class="container-fluid py-2">
+            <div class="row px-xl-5">
+                <div class="col">
+                    <div class="owl-carousel vendor-carousel">
+                        @foreach($logoBanners as $logo)
+                            <div class="vendor-item border p-4">
+                                <img src="{{ asset('front/images/banners/' . $logo['image']) }}" alt="{{ $logo['title'] }}">
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
     <!-- Vendor End -->
 @endsection

@@ -64,6 +64,7 @@
                                             <option value="">Выберите Тип</option>
                                             <option value="Slider" {{ old('type', $banner->type ?? '') == 'Slider' ? 'selected' : '' }}>Слайдер</option>
                                             <option value="Fix" {{ old('type', $banner->type ?? '') == 'Fix' ? 'selected' : '' }}>Фиксированный</option>
+                                            <option value="Logo" {{ old('type', $banner->type ?? '') == 'Logo' ? 'selected' : '' }}>Логотип</option>
                                         </select>
                                     </div>
                                     <div class="mb-3">

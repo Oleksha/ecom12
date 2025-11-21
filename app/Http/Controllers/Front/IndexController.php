@@ -18,9 +18,11 @@ class IndexController extends Controller
         $banners = $this->indexService->getHomePageBanners();
         $featured = $this->indexService->featuredProducts();
         $newArrivals = $this->indexService->newArrivalProducts();
+        $categories = $this->indexService->homeCategories();
         return view('front.index')
             ->with($banners)
             ->with($featured)
-            ->with($newArrivals);
+            ->with($newArrivals)
+            ->with($categories);
     }
 }
