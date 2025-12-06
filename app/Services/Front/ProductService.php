@@ -13,11 +13,12 @@ class ProductService
         $products = Product::with('product_images')
             ->whereIn('category_id', $categoryInfo['categoryIds'])
             ->where('status', 1)
-            ->paginate(30);
+            ->paginate(9);
 
         return [
             'categoryDetails' => $categoryInfo['categoryDetails'],
             'categoryProducts' => $products,
+            'breadcrumbs' => $categoryInfo['breadcrumbs'],
         ];
     }
 }
