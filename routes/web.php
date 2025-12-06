@@ -6,12 +6,19 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Front\IndexController;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use Intervention\Image\Format;
 use Intervention\Image\Laravel\Facades\Image;
+use App\Http\Controllers\Front\ProductController as ProductFrontController;
 
 Route::namespace('App\Http\Controllers\Front')->group(function () {
     Route::get('/', [IndexController::class, 'index']);
+
+    $catUrls = Category::where('status', 1)->pluck('url')->toArray();
+    foreach ($catUrls as $url) {
+        Route::get("/$url", [ProductFrontController::class, 'index']);
+    }
 });
 
 Route::get('product-image/{size}/{filename}', function ($size, $filename) {

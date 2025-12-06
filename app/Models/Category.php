@@ -32,4 +32,21 @@ class Category extends Model
         }
         return $getCategories->get()->toArray();
     }
+
+    public static function categoryDetails($url): ?array
+    {
+        $category = self::with('subcategories:id,parent_id,name')
+            ->where('url', $url)
+            ->where('status', 1)
+            ->first();
+        if (!$category) return null;
+        $categoryIds = [$category->id];
+        foreach ($category->subcategories as $subcategory) {
+            $categoryIds[] = $subcategory->id;
+        }
+        return [
+            'categoryIds' => $categoryIds,
+            'categoryDetails' => $category,
+        ];
+    }
 }
